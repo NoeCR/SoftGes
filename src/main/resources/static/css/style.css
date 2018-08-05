@@ -1,0 +1,10 @@
+@charset "ISO-8859-1";
+.bg-main{
+	background-color: rgba(0,0,0,.075)!important;	
+}
+.img-logo{
+	width: 100px;	
+}
+.main-p{
+	max-width: 100%;
+}
