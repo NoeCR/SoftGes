@@ -24,9 +24,7 @@ import com.softgest.app.models.entity.Usuario;
 public class UsuarioServiceImp implements UserDetailsService,IUsuarioService{
 
 	@Autowired
-	private IUsuarioDao usuarioDao;
-	
-	
+	private IUsuarioDao usuarioDao;	
 	
 	private Logger logger = LoggerFactory.getLogger(UsuarioServiceImp.class);
 	

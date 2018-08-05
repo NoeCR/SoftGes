@@ -47,8 +47,8 @@ public class LoginController {
 	}
 	@RequestMapping(value="/save", method = RequestMethod.POST)
 	public String guardarRegistro(@ModelAttribute Usuario usuario, BindingResult result, Model model, RedirectAttributes flash) {
-		String hashedPassword = passwordEncoder.encode(usuario.getPassword());
-		usuario.setPassword(hashedPassword);
+		//String hashedPassword = passwordEncoder.encode(usuario.getPassword());
+		//usuario.setPassword(hashedPassword);
 		usuarioService.insertar(usuario);
 		flash.addFlashAttribute("success", "Usuario registrado con éxito!");
 		return "redirect:/";
