@@ -14,4 +14,8 @@ public class MvcConfig implements WebMvcConfigurer{
 		registry.addViewController("/errors/error_403").setViewName("error_403");
 	}
 	
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }
