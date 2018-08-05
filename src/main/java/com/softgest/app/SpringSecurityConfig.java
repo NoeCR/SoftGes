@@ -1,6 +1,7 @@
 package com.softgest.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,14 +17,17 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private LoginSuccesHandler successHandler;
 	
-	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 	
 	@Autowired
 	private UsuarioServiceImp usuarioService;
+	
 	@Autowired
 	public void configurarGlobal(AuthenticationManagerBuilder build) throws Exception {		
-		build.userDetailsService(usuarioService).passwordEncoder(passwordEncoder);
+		build.userDetailsService(usuarioService).passwordEncoder(passwordEncoder());
 	}
 
 	@Override

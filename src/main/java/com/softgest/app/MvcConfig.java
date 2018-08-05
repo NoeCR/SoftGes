@@ -1,8 +1,7 @@
 package com.softgest.app;
 
-import org.springframework.context.annotation.Bean;
+
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -14,8 +13,5 @@ public class MvcConfig implements WebMvcConfigurer{
 		registry.addViewController("/errors/error_403").setViewName("error_403");
 	}
 	
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	
 }
