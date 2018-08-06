@@ -80,5 +80,4 @@ public class UsuarioServiceImp implements UserDetailsService,IUsuarioService{
 		}		
 		return null;
 	}
-
 }

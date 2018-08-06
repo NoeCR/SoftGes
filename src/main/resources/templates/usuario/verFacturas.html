@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/head :: head"></head>
+<body>
+	  <header th:replace="layout/header :: header"></header>
+	  <div class="container main-p py-4">
+		<div th:if="${#list.isEmpty(usuario.facturas)}" class="alert alert-info my-4" th:text="No hay facturas asignadas para el cliente ' + ${usuario.username} +'"></div>
+		<table th:if="${not #list.isEmpty(usuario.facturas)}"class="table table-bordered table-spired my-4">
+			<thead>
+				<tr>
+					<th>Nº Factura:</th>
+					<th>Descripción:</th>
+					<th>Fecha:</th>
+					<th>Total:</th>
+					<th>Detalle</th>
+					<th>PDF</th>
+				</tr>		
+			</thead>
+			<tbody>
+				<tr th:each="factura: ${usuario.facturas}">
+					<th th:text="${factura.id}"></th>
+					<th th:text="${factura.descripcion}">:</th>
+					<th th:text="${factura.createFac}"></th>
+					<th th:text="${factura.total}"></th>
+					<th>Detalle</th>
+					<th>PDF</th>				
+				</tr>
+			</tbody>		
+		</table>
+</div>
+<footer th:replace="layout/footer :: footer"></footer>
+</body>
+</html>

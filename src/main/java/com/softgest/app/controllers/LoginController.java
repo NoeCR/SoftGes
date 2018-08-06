@@ -2,6 +2,7 @@ package com.softgest.app.controllers;
 
 import java.security.Principal;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -56,8 +57,7 @@ public class LoginController {
 		usuario.setPassword(hashedPassword);
 		usuarioService.insertar(usuario);
 		Role rol = new Role();
-		rol.setUser(usuario);
-	
+		rol.setUser(usuario);	
 		roleService.insert(rol);
 		
 		flash.addFlashAttribute("success", "Usuario registrado con éxito!");
