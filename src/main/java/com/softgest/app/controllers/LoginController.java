@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.softgest.app.models.entity.Role;
 import com.softgest.app.models.entity.Usuario;
+import com.softgest.app.models.service.IRoleService;
 import com.softgest.app.models.service.IUsuarioService;
 
 @Controller
@@ -22,6 +24,9 @@ public class LoginController {
 
 	@Autowired
 	private IUsuarioService usuarioService;
+	
+	@Autowired
+	private IRoleService roleService;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -47,9 +52,14 @@ public class LoginController {
 	}
 	@RequestMapping(value="/save", method = RequestMethod.POST)
 	public String guardarRegistro(@ModelAttribute Usuario usuario, BindingResult result, Model model, RedirectAttributes flash) {
-		//String hashedPassword = passwordEncoder.encode(usuario.getPassword());
-		//usuario.setPassword(hashedPassword);
+		String hashedPassword = passwordEncoder.encode(usuario.getPassword());
+		usuario.setPassword(hashedPassword);
 		usuarioService.insertar(usuario);
+		Role rol = new Role();
+		rol.setUser(usuario);
+	
+		roleService.insert(rol);
+		
 		flash.addFlashAttribute("success", "Usuario registrado con éxito!");
 		return "redirect:/";
 	}

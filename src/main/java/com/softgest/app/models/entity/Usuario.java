@@ -1,6 +1,7 @@
 package com.softgest.app.models.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -31,12 +32,12 @@ public class Usuario implements Serializable{
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
 	@JoinColumn(name="user_id")
-	private List<Role> roles;
+	private List<Role> roles = new ArrayList<Role>();
 
 	
 	
 	public Usuario() {
-		this.enabled = true;		
+		this.enabled = true;			
 	}
 
 	public Long getId() {
@@ -78,6 +79,8 @@ public class Usuario implements Serializable{
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
-	
+	public void setRole(Role rol) {
+		roles.add(rol);
+	}
 	
 }

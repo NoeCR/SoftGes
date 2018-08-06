@@ -6,8 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
 
 @Entity
 @Table(name="authorities", uniqueConstraints= {@UniqueConstraint(columnNames= {"user_id", "authority"}) })
@@ -19,6 +22,22 @@ public class Role implements Serializable{
 	private Long id;
 	
 	private String authority;
+
+	@ManyToOne
+	private Usuario user;
+	
+	
+	public Usuario getUser() {
+		return user;
+	}
+
+	public void setUser(Usuario user) {
+		this.user = user;
+	}
+
+	public Role() {
+		this.authority = "ROLE_USER";
+	}
 
 	public Long getId() {
 		return id;

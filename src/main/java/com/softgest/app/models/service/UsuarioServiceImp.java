@@ -20,7 +20,7 @@ import com.softgest.app.models.dao.IUsuarioDao;
 import com.softgest.app.models.entity.Role;
 import com.softgest.app.models.entity.Usuario;
 
-@Service
+@Service("usuarioServiceImp")
 public class UsuarioServiceImp implements UserDetailsService,IUsuarioService{
 
 	@Autowired
