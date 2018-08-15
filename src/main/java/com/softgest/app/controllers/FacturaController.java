@@ -16,7 +16,7 @@ import com.softgest.app.models.service.IUsuarioService;
 
 @Controller
 @RequestMapping("/factura")
-@SessionAttributes("factura") // Guardamos la factura en una sesion hasta que dicha factura persista en la base de datos
+@SessionAttributes("factura") 
 public class FacturaController {
 	
 	@Autowired

@@ -5,7 +5,39 @@
 	  <header th:replace="layout/header :: header"></header>
 	<div class="container main-p py-4">
 		<h1>Página Principal</h1>
+	
+		<div class="row content">
+			<!-- Bloque para las categorias  -->
+			<div class="col-sm-3 sidenav">
+				<ul class="nav-pills nav-stacked">
+					
+						<li th:each="cat: ${categorias}" class="left-li-menu">
+							<span class="${cat.logo}"></span>
+								<a class="btn  left-btn-menu" th:text="${cat.nombre} + ${cat.id}" th:href="@{/} + ${cat.id}"></a>
+						</li>
+					
+				</ul>
+				<br>
+
+			</div>
+
+		<!-- Bloque para los productos  -->
+			<div th:each="producto: ${prodcutos}" class="col-xs-12 col-sm-6 col-md-3">
+						<!--  <img class="img-rounded" src="${urlPublic}/images/${pelicula.imagen}" alt="Generic placeholder image" width="150" height="200">-->
+						<h6 th:text="${producto.nombre}"></h6>
+						<h4>
+							<span class="label label-default">precio</span> 
+							<span class="label label-default">categoria</span> 
+							<span class="label label-default">comentarios</span>
+						</h4>
+						<p>
+							<a class="btn btn-sm btn-primary" href="${urlRoot}detail/${pelicula.id}/${fechaBusqueda}" role="button">Añadir al Carro</a>							
+						</p>
+					</div>
+								
+		</div>
 	</div>
+
 
 	 <footer th:replace="layout/footer :: footer"></footer>
 </body>

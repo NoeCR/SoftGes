@@ -5,9 +5,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -32,7 +35,10 @@ public class Producto implements Serializable {
 	
 	
 	//añadir campo comentario, La clase comentario tendra campos id,texto,valoración(entre 1-5) y usuario que realiza el comentario
-	//añadir campo categoria, la clase categoria tendra: id,nombre
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="categoria_id")
+	private Categoria categoria;
 	
 	@PrePersist
 	public void prePersist() {
@@ -61,6 +67,12 @@ public class Producto implements Serializable {
 	}
 	public void setCreatePro(Date createPro) {
 		this.createPro = createPro;
+	}
+	public Categoria getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 	

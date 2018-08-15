@@ -48,7 +48,7 @@ public class Usuario implements Serializable{
 
 	//Hay que crear la relacion del cliente con sus detalles
 	
-	// Esta variable sera pasada a la entidad Factura cuando se cree la factura, por lo tento con la anotacion @Transien indicamos a Hibernate que no la tenga encuenta para persistirn en BBDD
+	// Esta variable sera pasada a la entidad Factura cuando se cree la factura, por lo tanto con la anotacion @Transien indicamos a Hibernate que no la tenga encuenta para persistirn en BBDD
 	@Transient
 	private List<ItemFactura> items;
 	
