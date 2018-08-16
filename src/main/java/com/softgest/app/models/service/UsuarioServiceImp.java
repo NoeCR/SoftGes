@@ -80,4 +80,9 @@ public class UsuarioServiceImp implements UserDetailsService,IUsuarioService{
 		}		
 		return null;
 	}
+
+	@Override
+	public Usuario findByName(String nombre) {		
+		return usuarioDao.findByUsername(nombre);
+	}
 }

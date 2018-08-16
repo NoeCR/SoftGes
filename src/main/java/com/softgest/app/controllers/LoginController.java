@@ -3,6 +3,7 @@ package com.softgest.app.controllers;
 import java.security.Principal;
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,7 @@ public class LoginController {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
+	
 	@GetMapping("/login")
 	public String login(@RequestParam(value="error", required= false) String error,  Model model, Principal principal, RedirectAttributes flash,@RequestParam(value="logout", required= false) String logout) {
 		
@@ -40,17 +42,19 @@ public class LoginController {
 			return "redirect:/";
 		}
 		if(error != null) {
-			model.addAttribute("error", "Error login: nombre de usuario o contraseña incorrectas, vuelva a intentarlo.");
+			model.addAttribute("error", "Error login: nombre de usuario o contraseña incorrectas, vuelva a intentarlo.");			
 		}
 		if(logout != null) {
 			model.addAttribute("success", "Ha cerrado sesión con éxito!");
 		}
 		return "login";
 	}
+	
 	@GetMapping(value="/create")
 	public String crearRegistro(@ModelAttribute Usuario usuario) {		
 		return "formUsuario";
 	}
+	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
 	public String guardarRegistro(@ModelAttribute Usuario usuario, BindingResult result, Model model, RedirectAttributes flash) {
 		String hashedPassword = passwordEncoder.encode(usuario.getPassword());

@@ -2,7 +2,11 @@ package com.softgest.app.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,12 +17,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softgest.app.models.entity.Categoria;
 import com.softgest.app.models.entity.Producto;
+import com.softgest.app.models.entity.Usuario;
 import com.softgest.app.models.service.ICategoriaService;
 import com.softgest.app.models.service.IProductoService;
+import com.softgest.app.models.service.IUsuarioService;
+
 
 @Controller
 public class IndexController {
-
+	
+	@Autowired
+	private IUsuarioService usuarioService;
+	
 	@Autowired
 	private IProductoService productoService;
 	
@@ -26,12 +36,18 @@ public class IndexController {
 	private ICategoriaService categoriaService;
 	
 	@RequestMapping(value="/", method= RequestMethod.GET)
-	public String index(Model model) {
+	public String index(Model model, HttpSession session) {
 		model.addAttribute("titulo", "Página Principal");
 		List<Producto> productos = productoService.findAll();
 		model.addAttribute("prodcutos", productos);
 		List<Categoria> categorias = categoriaService.findAll();
-		model.addAttribute("categorias", categorias);
+		model.addAttribute("categorias", categorias);	
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();		
+		Usuario usuario = usuarioService.findByName(auth.getName());
+				
+		
+		model.addAttribute("usuario", usuario);
 		return "index";
 	}
 	

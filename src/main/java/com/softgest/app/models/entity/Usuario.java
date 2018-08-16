@@ -18,8 +18,11 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import org.springframework.context.annotation.Scope;
+
 @Entity
 @Table(name="users")
+@Scope("session")
 public class Usuario implements Serializable{
 
 	private static final long serialVersionUID = 1L;

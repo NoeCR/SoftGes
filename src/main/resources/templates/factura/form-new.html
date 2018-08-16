@@ -1,0 +1,40 @@
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="layout/head :: head"></head>
+<body>
+
+	<div class="container main-p py-4">
+		<form th:action="@{/factura/form/}" th:object="${factura}" method="post">
+			<!-- Grupo para mostrra el listadod e producots con sus caracteristicas -->
+			<div class="form-group row">  
+				 <div th:if="${#lists.isEmpty(factura.usuario.items)}" class="alert alert-info my-4" th:text="No hay facturas asignadas para el cliente ' + ${factura.usuario.username} +'"></div> 
+					<table th:if="${not #list.isEmpty(factura.usuario.items)}"class="table table-bordered table-spired my-4">
+						<tbody>
+							<tr th:each="item: ${factura.usuario.items}">
+								<th>Imagen</th>		
+								<th th:text="${item.id}"></th>
+								<th th:text="${item.producto.nombre}">:</th>
+								<th th:text="${item.producto.precio}"></th>
+								<th th:text="${item.cantidad}"></th>
+								<th th:text="#"></th>										
+							</tr>
+						</tbody>		
+					</table>	
+			
+			
+			</div>
+			
+			
+			
+			<!-- Grupo para mostrra la descripcion  y el total de la factura -->
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label" th:text="'Descripción'"></label>
+				<input type="text" th:field="descripcion" class="form-control">
+			</div>
+			<div class="form-group row">
+				<input type="submit" th:value="${titulo}" class="btn btn-secondary">
+			</div>
+		</form>			
+	</div>
+	<footer th:replace="layout/footer :: footer"></footer>
+</body>
+</html>
