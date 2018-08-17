@@ -70,7 +70,7 @@ public class Factura implements Serializable {
 		return id;
 	}
 	public void addItem(ItemFactura item) {
-		items.add(item);
+		this.items.add(item);
 	}
 	public void setId(Long id) {
 		this.id = id;

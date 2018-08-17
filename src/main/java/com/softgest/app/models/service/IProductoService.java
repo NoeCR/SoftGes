@@ -7,4 +7,5 @@ public interface IProductoService {
 
 	public List<Producto> findAll();
 	public List<Producto> findByCategoria(Long categoria_id);
+	public Producto findById(Long producto_id);
 }

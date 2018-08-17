@@ -27,6 +27,12 @@ public class ItemFactura implements Serializable {
 	@JoinColumn(name="producto_id")
 	private Producto producto;
 	
+	
+	public ItemFactura(Producto producto) {		
+		this.cantidad = 1;
+		this.producto = producto;
+	}
+
 	public Double calcularImporte() {
 		
 		return cantidad * producto.getPrecio();
@@ -48,4 +54,20 @@ public class ItemFactura implements Serializable {
 		this.cantidad = cantidad;
 	}
 
+	public void addCantidad() {
+		this.cantidad++;
+	}
+	public Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
+
+	@Override
+	public String toString() {
+		return "ItemFactura [id=" + id + ", cantidad=" + cantidad + ", producto=" + producto + "]";
+	}
+	
 }

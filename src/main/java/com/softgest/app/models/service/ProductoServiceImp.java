@@ -1,6 +1,7 @@
 package com.softgest.app.models.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,15 @@ public class ProductoServiceImp implements IProductoService {
 	@Override
 	public List<Producto> findByCategoria(Long categoria_id) {		
 		return productoDao.findByCategoriaId(categoria_id);
+	}
+
+	@Override
+	public Producto findById(Long producto_id) {
+		Optional<Producto> optional = productoDao.findById(producto_id);
+		if(optional.isPresent()) {
+			return optional.get();
+		}
+		return null;
 	}
 
 }

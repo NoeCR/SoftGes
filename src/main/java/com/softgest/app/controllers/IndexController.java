@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softgest.app.models.entity.Categoria;
+import com.softgest.app.models.entity.ItemFactura;
 import com.softgest.app.models.entity.Producto;
 import com.softgest.app.models.entity.Usuario;
 import com.softgest.app.models.service.ICategoriaService;
@@ -35,6 +38,8 @@ public class IndexController {
 	@Autowired
 	private ICategoriaService categoriaService;
 	
+	protected final Log logger = LogFactory.getLog(this.getClass());
+	
 	@RequestMapping(value="/", method= RequestMethod.GET)
 	public String index(Model model, HttpSession session) {
 		model.addAttribute("titulo", "Página Principal");
@@ -42,12 +47,26 @@ public class IndexController {
 		model.addAttribute("prodcutos", productos);
 		List<Categoria> categorias = categoriaService.findAll();
 		model.addAttribute("categorias", categorias);	
-		
+		@SuppressWarnings("unchecked")
+		List<ItemFactura> items = (List<ItemFactura>) session.getAttribute("items");
+		if(items != null) {
+			for(ItemFactura itm : items) {
+				logger.info("Información de los items de la coleccion: ".concat(itm.toString()));
+			}
+		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();		
 		Usuario usuario = usuarioService.findByName(auth.getName());
-				
+		if(usuario != null) {
+			if(items != null) {
+				usuario.setItems(items);
+				for(ItemFactura itm : usuario.getItems()) {
+					logger.info("Información de los items de la coleccion DEL USUARIO: ".concat(itm.toString()));
+				}
+			}
+			session.setAttribute("usuario", usuario);
+			model.addAttribute("usuario", usuario);
+		}
 		
-		model.addAttribute("usuario", usuario);
 		return "index";
 	}
 	

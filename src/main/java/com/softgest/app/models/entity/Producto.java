@@ -36,7 +36,7 @@ public class Producto implements Serializable {
 	
 	//añadir campo comentario, La clase comentario tendra campos id,texto,valoración(entre 1-5) y usuario que realiza el comentario
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="categoria_id")
 	private Categoria categoria;
 	
@@ -73,6 +73,11 @@ public class Producto implements Serializable {
 	}
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+	@Override
+	public String toString() {
+		return "Producto [id=" + id + ", nombre=" + nombre + ", precio=" + precio + ", createPro=" + createPro
+				+ ", categoria=" + categoria + "]";
 	}
 
 	
