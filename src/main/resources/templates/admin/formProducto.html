@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout/head :: head"></head>
+<head></head>
+<body>
+
+	<header th:replace="layout/header :: header"></header>
+
+	<div class="container py-4">
+
+		<div class="card border-primary text-center">
+			<div class="card-header">Nuevo Producto</div>
+			<div class="card-body">
+
+				<form th:action="@{/admin/saveProduct}" method="post">
+
+					<div class="form-group col-sm-6">						
+						<span class="span-p">Nombre del Producto</span>
+						<input type="text" name="nombre" id="nombre" class="form-control" placeholder="" autofocus required />
+					</div>
+					
+					<div class="form-group col-sm-6">
+						<span class="span-p">Precio</span>
+						<input type="text" name="precio" id="precio" class="form-control" placeholder=""  required />
+					</div>
+					
+					<div class="form-group col-sm-6">						
+						<span class="span-p">Seleccione la categoria</span>
+						<select id="categoria" name="categoria" class="select-p">
+							<option th:each="cat: ${categorias}" th:value="${cat.id}" th:text="${cat.nombre}"></option>
+						</select>
+					</div>
+					<div class="form-group col-sm-6">						
+						<span class="span-p">Stock inicial</span>
+						<input type="number" name="stock" id="" class="form-control" placeholder=""  required />
+					</div>
+					
+					<div class="form-group col-sm-6">						
+						<span class="span-p">Imagen del producto</span>
+						<input type="file" name="imagen" id="imagen" class="form-control" placeholder=""  />
+					</div>
+					<div class="form-group col-sm-6">
+						<input type="submit" class="btn btn-lg btn-primary btn-block" value="Crear Producto" />
+					</div>
+					
+
+				</form>
+
+			</div>
+
+		</div>
+
+
+	</div>
+
+
+	<footer th:replace="layout/footer :: footer"></footer>
+</body>
+</html>

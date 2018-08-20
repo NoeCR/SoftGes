@@ -11,7 +11,6 @@ import com.softgest.app.models.entity.Usuario;
 public interface IUsuarioDao extends JpaRepository<Usuario, Long>{
 
 	
-	public Usuario findByUsername(String username);
-	
+	public Usuario findByUsername(String username);	
 	public List<Usuario> findByEnabled(int activo);
 }

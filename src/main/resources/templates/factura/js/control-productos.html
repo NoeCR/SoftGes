@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<script type="text/javascript" th:fragment="javascriptProductos">
+
+$(document).on('ready', linea(1))
+
+function linea(id){
+	var id = parseInt(document.getElementById("producto_id").value);
+	var precio = parseFloat(document.getElementById("precio").innerHTML);
+	var cantidad = parseFloat(document.getElementById("cantidad").value);
+	
+	var resultado = precio * cantidad;
+	var a = document.getElementById("total_importe_"+ id);
+	a.innerHTML = resultado;
+	
+	return resultado;
+	} 
+function eliminarLineaFactura(btn){
+	fila = btn.parentNode.parentNode;
+	fila.parentNode.removeChild(fila);	
+}
+
+
+</script>
+</body>
+</html>

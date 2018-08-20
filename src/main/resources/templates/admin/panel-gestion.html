@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/head :: head"></head>
+<body>
+	<header th:replace="layout/header :: header"></header>
+	<div class="container main-g py-4">
+		<h1>Panel de gestión</h1>
+		
+			<div class="panel panel-default">
+			  <div class="panel-heading">Gestión de Clientes</div>
+			  <div class="panel-body"><a th:href="@{/admin/listar-clientes}" class="btn btn-primary">Ver Clientes</a></div>
+			</div>
+		  	<div class="panel panel-default">
+			  <div class="panel-heading">Gestión de Productos</div>
+			  <div class="panel-body"><a th:href="@{/admin/listar-productos}" class="btn btn-primary">Ver Productos</a></div>
+			</div>		 
+		
+	</div>
+ <footer th:replace="layout/footer :: footer"></footer>
+</body>
+</html>

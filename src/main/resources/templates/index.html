@@ -13,7 +13,7 @@
 					
 						<li th:each="cat: ${categorias}" class="left-li-menu">
 							<span class="${cat.logo}"></span>
-								<a class="btn  left-btn-menu" th:text="${cat.nombre} + ${cat.id}" th:href="@{/} + ${cat.id}"></a>
+								<a class="btn  left-btn-menu" th:text="${cat.nombre}" th:href="@{/} + ${cat.id}"></a>
 						</li>
 					
 				</ul>

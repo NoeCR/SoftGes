@@ -71,7 +71,8 @@ public class IndexController {
 	}
 	
 	@RequestMapping(value="/{categoriaid}", method= RequestMethod.GET)
-	public String showProductByCat(Model model, @PathVariable(value="categoriaid") Long categoria_id, @RequestParam(value="error", required= false) String error, RedirectAttributes flash) {
+	public String showProductByCat(Model model, @PathVariable(value="categoriaid") Long categoria_id, @RequestParam(value="error", required= false) String error, RedirectAttributes flash, HttpSession session) {	
+		model.addAttribute("usuario", (Usuario) session.getAttribute("usuario"));
 		if(error != null) {
 			model.addAttribute("error", "Error: no se encuentra ninguna categoria con este id");
 		}

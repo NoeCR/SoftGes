@@ -1,12 +1,11 @@
 package com.softgest.app.controllers;
 
-import java.util.Map;
 
+import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +18,7 @@ import com.softgest.app.models.entity.ItemFactura;
 import com.softgest.app.models.entity.Usuario;
 
 
+
 @Controller
 @RequestMapping("/factura")
 @SessionAttributes("factura") 
@@ -26,6 +26,9 @@ public class FacturaController {
 	
 	//@Autowired
 	//private IUsuarioService usuarioService;
+	
+	//@Autowired
+	//private IProductoService productoService;
 	
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -51,12 +54,23 @@ public class FacturaController {
 				}
 			}
 		}
-		
+		//session.setAttribute("factura", factura);
 		model.put("factura", factura);
 		model.put("usuario", usuario);
 		model.put("titulo", "Realizar compra");
 		
 		return "factura/form";
 	}
-	
+	/*
+	@GetMapping(value = "/cargar-productos/",path="/cargar-productos/", produces = { "application/json" })
+	public @ResponseBody List<Producto> cargarProductos(HttpSession session) {
+		 List<Producto> productos = new ArrayList<Producto>();
+		 Factura factura = (Factura) session.getAttribute("factura");
+		 List<ItemFactura> items = factura.getItems();
+		 for(int i = 0; i < items.size(); i++) {
+			 productos.add(items.get(i).getProducto());
+		 }
+		return productos;
+	}
+	*/
 }

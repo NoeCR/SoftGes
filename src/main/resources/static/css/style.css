@@ -8,3 +8,14 @@
 .main-p{
 	max-width: 100%;
 }
+.main-g{
+	max-width: 75%;
+}
+.span-p{
+	float: left;
+    line-height: 2.2em;
+    margin: 5px;
+}
+.select-p{
+	margin-top: 12px;
+}

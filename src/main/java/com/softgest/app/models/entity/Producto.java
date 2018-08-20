@@ -28,13 +28,15 @@ public class Producto implements Serializable {
 	
 	private String nombre;
 	private Double precio;
+	private int stock;
+	
+	
+	@Column(name="imagen")
+	private String img = "muestra.png";
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="create_pro")
-	private Date createPro;
-	
-	
-	//añadir campo comentario, La clase comentario tendra campos id,texto,valoración(entre 1-5) y usuario que realiza el comentario
+	private Date createPro;	
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="categoria_id")
@@ -42,8 +44,9 @@ public class Producto implements Serializable {
 	
 	@PrePersist
 	public void prePersist() {
-		createPro = new Date();
+		createPro = new Date();		
 	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -73,6 +76,20 @@ public class Producto implements Serializable {
 	}
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+	
+	public int getStock() {
+		return stock;
+	}
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+	
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
 	}
 	@Override
 	public String toString() {

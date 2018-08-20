@@ -36,4 +36,15 @@ public class ProductoServiceImp implements IProductoService {
 		return null;
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<Producto> findByNombre(String term) {
+		return productoDao.findByNombreLikeIgnoreCase("%"+term+"%");
+	}
+
+	@Override
+	public void saveProducto(Producto producto) {
+		productoDao.save(producto);
+		
+	}
 }

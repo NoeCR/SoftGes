@@ -17,7 +17,7 @@ public class CarUtil {
 	public static List<ItemFactura> addProducto(Producto producto, HttpSession session){
 		ItemFactura item = new ItemFactura(producto);
 		logger.log(Level.INFO, item.toString());
-		
+		boolean encontrado = false;
 		@SuppressWarnings("unchecked")
 		List<ItemFactura> items = (List<ItemFactura>) session.getAttribute("items");		
 		
@@ -27,15 +27,16 @@ public class CarUtil {
 			return items;
 		}
 		for(ItemFactura itm: items) {
-			if(itm.getProducto().getNombre().equals(item.getProducto().getNombre())) {
+			if(itm.getProducto().getId() == item.getProducto().getId()) {
 				itm.addCantidad();
-				return items;
-			}else {
-				items.add(item);
-				return items;
+				encontrado = true;	
 			}
 		}
-		
-		return null;
+		if(!encontrado) {
+			items.add(item);
+			return items;
+		}else {
+			return items;
+		}
 	}
 }

@@ -48,8 +48,6 @@ public class Usuario implements Serializable{
 	
 	@OneToMany(mappedBy="usuario",fetch=FetchType.LAZY, cascade=CascadeType.ALL)	
 	private List<Factura> facturas;
-
-	//Hay que crear la relacion del cliente con sus detalles
 	
 	// Esta variable sera pasada a la entidad Factura cuando se cree la factura, por lo tanto con la anotacion @Transien indicamos a Hibernate que no la tenga encuenta para persistirn en BBDD
 	@Transient
