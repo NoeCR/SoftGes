@@ -1,5 +1,9 @@
 package com.softgest.app.controllers;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,7 +20,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.softgest.app.models.entity.Categoria;
@@ -77,11 +83,24 @@ public class AdminController {
 	
 	@Secured("ROLE_ADMIN")
 	@PostMapping(value="/saveProduct")
-	public String guardarProducto(@Valid Producto producto, BindingResult result, Model model, HttpSession session, RedirectAttributes flash, SessionStatus status) {
+	public String guardarProducto(@Valid Producto producto, @RequestParam("file") MultipartFile img, BindingResult result, Model model, HttpSession session, RedirectAttributes flash, SessionStatus status) {
 		model.addAttribute("usuario", (Usuario) session.getAttribute("usuario"));
 		logger.info("Información del Producto: ".concat(producto.toString()));
 		if(result.hasErrors()) {
 			return "/admin/formProducto";
+		}
+		if(!img.isEmpty()) {
+			Path dirRecursos = Paths.get("src//main//resources//static/uploads");
+			String rootPath = dirRecursos.toFile().getAbsolutePath();
+			try {
+				byte[] bytes = img.getBytes();
+				Path rutaCompleta = Paths.get(rootPath + "//" + img.getOriginalFilename());
+				Files.write(rutaCompleta, bytes);
+				flash.addFlashAttribute("info", "Imagen subida correctamente '" + img.getOriginalFilename() + "'");
+				producto.setImg(img.getOriginalFilename());
+			} catch (IOException e) {				
+				e.printStackTrace();
+			}
 		}
 		productoService.saveProducto(producto);
 		status.setComplete();

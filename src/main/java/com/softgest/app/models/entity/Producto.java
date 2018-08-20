@@ -27,12 +27,13 @@ public class Producto implements Serializable {
 	private Long id;
 	
 	private String nombre;
+	private String descripcion;
 	private Double precio;
 	private int stock;
 	
 	
 	@Column(name="imagen")
-	private String img = "muestra.png";
+	private String img;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="create_pro")
@@ -91,6 +92,15 @@ public class Producto implements Serializable {
 	public void setImg(String img) {
 		this.img = img;
 	}
+	
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
 	@Override
 	public String toString() {
 		return "Producto [id=" + id + ", nombre=" + nombre + ", precio=" + precio + ", createPro=" + createPro

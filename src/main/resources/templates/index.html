@@ -22,8 +22,10 @@
 			</div>
 
 		<!-- Bloque para los productos  -->
+		<div class="row col-sm-9">
 			<div th:each="producto: ${prodcutos}" class="col-xs-12 col-sm-6 col-md-3">
-						<!--  <img class="img-rounded" src="${urlPublic}/images/${pelicula.imagen}" alt="Generic placeholder image" width="150" height="200">-->
+						<!-- src="${urlPublic}/images/${pelicula.imagen}" -->
+						<img th:if="${#strings.length(producto.img) > 0}" class="img-rounded img-thumbnail" th:src="@{'/uploads/' + ${producto.img}}" th:alt="${producto.img}" width="150" height="200">
 						<h6 th:text="${producto.nombre}"></h6>
 						<h4>
 							<span class="label label-default" th:text="${producto.precio} + €">precio</span> <br />
@@ -33,8 +35,8 @@
 						<p>
 							<a class="btn btn-sm btn-primary" th:href="@{/car/} + ${producto.id}" role="button" th:value="${producto.id}">Añadir al Carro</a>							
 						</p>
-					</div>
-								
+			</div>
+		</div>						
 		</div>
 	</div>
 

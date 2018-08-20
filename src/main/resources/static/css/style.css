@@ -5,6 +5,11 @@
 .img-logo{
 	width: 100px;	
 }
+.img-logo-footer{
+    width: 155px;
+    background-color: currentColor;
+    border-radius: 2.3em;
+}
 .main-p{
 	max-width: 100%;
 }

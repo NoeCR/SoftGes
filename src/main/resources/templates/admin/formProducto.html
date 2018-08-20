@@ -12,11 +12,16 @@
 			<div class="card-header">Nuevo Producto</div>
 			<div class="card-body">
 
-				<form th:action="@{/admin/saveProduct}" method="post">
+				<form th:action="@{/admin/saveProduct}" method="post" enctype="multipart/form-data">
 
 					<div class="form-group col-sm-6">						
 						<span class="span-p">Nombre del Producto</span>
 						<input type="text" name="nombre" id="nombre" class="form-control" placeholder="" autofocus required />
+					</div>
+					
+					<div class="form-group col-sm-6">						
+						<span class="span-p">descripcion del Producto</span>
+						<textarea rows="4" cols="50" name="descripcion" id="descripcion" class="form-control" placeholder="" autofocus required ></textarea>
 					</div>
 					
 					<div class="form-group col-sm-6">
@@ -36,8 +41,8 @@
 					</div>
 					
 					<div class="form-group col-sm-6">						
-						<span class="span-p">Imagen del producto</span>
-						<input type="file" name="imagen" id="imagen" class="form-control" placeholder=""  />
+						<label for="file" class="span-p">Imagen del producto</label>
+						<input type="file" name="file" class="form-control" />
 					</div>
 					<div class="form-group col-sm-6">
 						<input type="submit" class="btn btn-lg btn-primary btn-block" value="Crear Producto" />

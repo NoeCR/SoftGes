@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <footer th:fragment="footer" class="container">
 		<hr />
-		<img th:src="@{/images/spring.png}" alt="Spring logo" />
+		<img th:src="@{/images/logo.png}" alt="Soft-gest logo" class="img-logo-footer img-rounded"/>
 		<p sec:authorize="isAuthenticated()">
 			Usuario logeado: <span sec:authentication="name"></span> | Roles: <span sec:authentication="principal.authorities"></span>
 		</p>
