@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<script type="text/javascript" th:fragment="javascriptSwap">
+		function desaparecer(objeto){
+		    $(objeto).animate({
+		        opacity: 0.0,                   
+		    }).hide("slow");
+		}
+		
+		function aparecer(objeto){
+		    $(objeto)
+		        .animate({
+		            opacity: '1.0',
+		           
+		        }).show();
+		}
+</script>
+</body>
+</html>

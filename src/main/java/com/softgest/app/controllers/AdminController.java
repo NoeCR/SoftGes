@@ -106,6 +106,6 @@ public class AdminController {
 		status.setComplete();
 		flash.addFlashAttribute("info", "Producto guardado con exito");
 		model.addAttribute("categorias", categoriaService.findAll());
-		return "/admin/formProducto";
+		return "/admin/listado-productos";
 	}
 }
