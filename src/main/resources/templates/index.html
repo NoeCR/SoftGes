@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/head :: head"></head>
 <body>
-	  <header th:replace="layout/header :: header"></header>
+	<header th:replace="layout/header :: header"></header>
 	<div class="container main-p py-4">
 		<h1>Página Principal</h1>
 	
@@ -33,6 +33,7 @@
 							<span class="label label-default">Valoración</span>
 						</h4>
 						<p>
+							<a class="btn btn-sm btn-primary" th:href="@{/verProducto/} + ${producto.id}" role="button" th:value="${producto.id}">Ver detalle</a>	
 							<a class="btn btn-sm btn-primary" th:href="@{/car/} + ${producto.id}" role="button" th:value="${producto.id}">Añadir al Carro</a>							
 						</p>
 			</div>
