@@ -2,6 +2,7 @@ package com.softgest.app.models.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name="user_details")
@@ -21,14 +24,22 @@ public class UsuarioDetalle implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
+	@NotEmpty
+	@Column(length= 50, unique = true)
 	private String nombre;
+	@NotEmpty
 	private String apellidos;
+	@NotEmpty
+	@Email
 	private String email;
+	@NotEmpty
 	private String direccion;
+	@NotEmpty
+	@Column(length = 12)
 	private String telf;
 	//relacion unidireccional entre el usuario y sus detalles
 	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="usuario_id")
+	@JoinColumn(name="user_id")
 	private Usuario usuario;
 	public Long getId() {
 		return id;
