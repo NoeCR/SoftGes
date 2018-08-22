@@ -63,25 +63,19 @@ public class LoginController {
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
 	public String guardarRegistro(@ModelAttribute Usuario usuario, BindingResult result, Model model, RedirectAttributes flash, SessionStatus status, 
-			@RequestParam(name="nombre", required = true) String nombre,
-			@RequestParam(name="apellidos", required = true) String apellidos,
-			@RequestParam(name="email", required = true) String email,
-			@RequestParam(name="direccion", required = true) String direccion,
-			@RequestParam(name="telf", required = true) String telf) {
+			@ModelAttribute UsuarioDetalle usuarioDetalle) {
+		
 		String hashedPassword = passwordEncoder.encode(usuario.getPassword());
 		usuario.setPassword(hashedPassword);
 		usuarioService.insertar(usuario);
+		
 		Role rol = new Role();
 		rol.setUser(usuario);	
 		roleService.insert(rol);
-		UsuarioDetalle usuarioDetalle = new UsuarioDetalle();
-		usuarioDetalle.setNombre(nombre);
-		usuarioDetalle.setApellidos(apellidos);
-		usuarioDetalle.setEmail(email);
-		usuarioDetalle.setDireccion(direccion);
-		usuarioDetalle.setTelf(telf);
+		
 		usuarioDetalle.setUsuario(usuario);
 		usuarioDetalleService.saveUsuarioDetalle(usuarioDetalle);
+		
 		status.setComplete();
 		flash.addFlashAttribute("success", "Usuario registrado con éxito!");
 		return "redirect:/";
