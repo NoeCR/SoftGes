@@ -5,10 +5,35 @@
 .img-logo{
 	width: 100px;	
 }
+.img-p{
+	width: 25%;
+}
 .img-logo-footer{
     width: 155px;
     background-color: currentColor;
     border-radius: 2.3em;
+}
+.item-u{
+	cursor: pointer;
+	border-radius: 4px;
+}
+.span-items{
+	position: absolute;
+	width: 25px;
+	height: 25px;    
+    top: 27px;
+    right: -7px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #fff;
+    background: radial-gradient(ellipse at center,#0fc9e6f0 1%,#17a2b8e8 98%,#fff 0,#fff 100%,#fff 0);
+    text-align: center;
+    font-family: Open Sans,arial,sans-serif;
+    font-weight: 700;
+    color: antiquewhite;
+}
+.item-u:hover{
+	background-color:  darkgray;	
 }
 .main-p{
 	max-width: 100%;
@@ -59,4 +84,12 @@
 }
 .info-content{
 	margin-top: 5px;
+}
+.form-f{
+	width: 80%;
+    margin: auto;
+}
+.th-fac{
+	vertical-align: inherit;
+	border: none;
 }

@@ -50,9 +50,14 @@ public class IndexController {
 		@SuppressWarnings("unchecked")
 		List<ItemFactura> items = (List<ItemFactura>) session.getAttribute("items");
 		if(items != null) {
+			int numItems = items.size();
+			model.addAttribute("numItems", numItems);
 			for(ItemFactura itm : items) {
 				logger.info("Información de los items de la coleccion: ".concat(itm.toString()));
 			}
+		}else {
+			int numItems = 0;
+			model.addAttribute("numItems", numItems);
 		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();		
 		Usuario usuario = usuarioService.findByName(auth.getName());

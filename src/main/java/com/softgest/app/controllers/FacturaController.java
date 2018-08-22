@@ -1,6 +1,7 @@
 package com.softgest.app.controllers;
 
 
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 
@@ -35,6 +36,8 @@ public class FacturaController {
 	@GetMapping(value="/form/{usuarioid}")
 	public String crearFactura(@PathVariable(value="usuarioid") Long usuarioId, Map<String, Object> model, RedirectAttributes flash, HttpSession session) {
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
+		@SuppressWarnings("unchecked")
+		List<ItemFactura> items = (List<ItemFactura>) session.getAttribute("items");
 		Factura factura = new Factura();
 		// Si no hay cliente se le redirecciona a la pagina de login
 		if(usuario == null) {
@@ -57,9 +60,13 @@ public class FacturaController {
 		//session.setAttribute("factura", factura);
 		model.put("factura", factura);
 		model.put("usuario", usuario);
+		if(items != null) {
+			int numItems = items.size();
+			model.put("numItems", numItems);
+		}
 		model.put("titulo", "Realizar compra");
 		
-		return "factura/form";
+		return "usuario/verCarro";
 	}
 	/*
 	@GetMapping(value = "/cargar-productos/",path="/cargar-productos/", produces = { "application/json" })
