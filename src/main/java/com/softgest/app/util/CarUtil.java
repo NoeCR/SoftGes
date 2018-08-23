@@ -39,4 +39,19 @@ public class CarUtil {
 			return items;
 		}
 	}
+	
+	public static List<ItemFactura> removeProducto(List<ItemFactura> items, Long producto_id) {
+		List<ItemFactura> itemsFactura = items;
+		for(int i = 0; i < itemsFactura.size(); i++) {
+			if(itemsFactura.get(i).getProducto().getId().longValue() == producto_id) {
+				logger.info("encontrado, prodcuto eliminado " + itemsFactura.get(i).getProducto().getNombre());
+				itemsFactura.remove(items.get(i));				
+				break;
+			}
+		}
+		
+		return itemsFactura;
+	}
+	
+	
 }

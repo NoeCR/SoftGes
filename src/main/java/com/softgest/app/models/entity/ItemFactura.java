@@ -2,6 +2,7 @@ package com.softgest.app.models.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,6 +23,9 @@ public class ItemFactura implements Serializable {
 	private Long id;
 
 	private Integer cantidad;
+	
+	@Column(name="total_linea")
+	private Double lineaTotal;
 
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="producto_id")
@@ -31,10 +35,6 @@ public class ItemFactura implements Serializable {
 	public ItemFactura(Producto producto) {		
 		this.cantidad = 1;
 		this.producto = producto;
-	}
-
-	public static Double calcularImporte(int cantidad, double precio) {		
-		return cantidad * precio;
 	}
 	
 	public Long getId() {

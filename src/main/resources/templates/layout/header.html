@@ -32,7 +32,7 @@
 							</form>
 						</div>
 						<!--<span sec:authorize="isAuthenticated()" th:text="${usuario.id}"></span>-->
-						<a class="btn btn-outline-primary" th:href="@{'/factura/form/' + ${usuario.id}}" >Ver carro</a>
+						<a class="btn btn-outline-primary" th:href="@{/cart/}" >Ver carro</a>
 						<span th:text="${numItems}" class="span-items"></span>	
 					</li>
 					<!-- Enlace para ver el carro del cliente

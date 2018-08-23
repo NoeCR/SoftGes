@@ -8,20 +8,20 @@
 			<table th:if="${not #lists.isEmpty(factura.items)}" class="table table-bordered table-spired my-4">
 				<tbody>
 					<tr th:each="item: ${factura.items}" th:id="'row_'+${item.producto.id}" >
-						<th class="d-none"><input type="hidden" th:value="${item.producto.id}" id="producto_id" name="item_id[]" /></th>
+						<th class="d-none"><input type="hidden" th:value="${item.producto.id}" id="producto_id" name="producto" /></th>
 						<th class="th-fac"><img th:src="@{'/uploads/' + ${item.producto.img} }" alt="${item.producto.img}" class="img-p"/></th>							
-						<!-- <th th:text="${item.producto.id}"></th>-->
 						<th th:text="${item.producto.nombre}" class="th-fac" id="nombre-producto"></th>
 						<th th:text="${item.producto.precio}" th:value="${item.producto.precio}" class="th-fac" id="precio"></th>
 						<th th:text="${item.cantidad}" th:value="${item.cantidad}" class="th-fac"></th>
 						
 						<td><span th:text="${T(com.softgest.app.util.CalculoLinea).calculoLinea(item.cantidad,item.producto.precio )}">0</span></td>
-						<td><a href="#" class="btn btn-danger btn-xs"  onclick="eliminarLineaFactura(this);">x</a></td>		
+						<td><a href="#" class="btn btn-danger btn-xs"  th:href="@{/car/remove/} + ${item.producto.id}">X</a></td>		
 					</tr>
 				</tbody>
 			</table>		
 
-			<h5>Total <span class="badge badge-secondary" id="gran_total">0</span></h5>
+			<h5>Total <span class="badge badge-secondary" id="gran_total" th:text="${T(com.softgest.app.util.CalculoLinea).total}">0</span></h5>
+			<span class="d-none" th:value="${T(com.softgest.app.util.CalculoLinea).resetTotal()}"></span>
 			<div class="form-group row">
 				<div class="col-sm-6">
 					<label class="col-sm-2 col-form-label" th:text="Descripción"></label> 
@@ -36,6 +36,6 @@
 			</div>	
 		</form>			
 	</div>
-	<footer th:replace="layout/footer :: footer"></footer>
+	<footer th:replace="layout/footer :: footer"></footer>	
 </body>
 </html>

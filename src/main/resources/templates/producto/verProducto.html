@@ -29,21 +29,16 @@
 		<br />
 		<div class="card">
 			<div class="nav-p">
-				<nav class="navbar navbar-expand-lg navbar-light bg-light">					
-					
+				<nav class="navbar navbar-expand-lg navbar-light bg-light">								
 						<ul class="navbar-nav">
 							<li class="nav-item active">
 								<input class="btn-cambio" type="button" onClick="javascript:aparecer('#div1'); return false;" onfocus="javascript:desaparecer('#div2'); return false;" th:value="CARACTER&Iacute;STICAS" />
-								<!--<a class="nav-link" onClick="javascript:aparecer('#specs'); return false;" onfocus="javascript:desaparecer('#opinions'); return false;">Caracteristicas</a>-->
 							</li>
 							<li class="nav-item">
-								<input class="btn-cambio" type="button" onclick="javascript:aparecer('#div2'); return false;" onfocus="javascript:desaparecer('#div1'); return false;" value="OPINIONES" />
-								<!--<a class="nav-link" onclick="javascript:aparecer('#opinions'); return false;" onfocus="javascript:desaparecer('#specs'); return false;">Opiniones</a>-->
+								<input class="btn-cambio" type="button" onclick="javascript:aparecer('#div2'); return false;" onfocus="javascript:desaparecer('#div1'); return false;" value="OPINIONES" />								
 							</li>
 						</ul>
 				</nav>
-
-
 			</div>
 			<div class="card-body" id="div1">
 				<div th:utext="${producto.descripcion}" class="card-text"></div>

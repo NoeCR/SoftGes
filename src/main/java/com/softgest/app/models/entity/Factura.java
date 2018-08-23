@@ -37,6 +37,9 @@ public class Factura implements Serializable {
 	@Column(name="create_fac")
 	private Date createFac;
 	
+	@Column(name="total_factura")
+	private Double facturaTotal;
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Usuario usuario;
 	
@@ -45,13 +48,6 @@ public class Factura implements Serializable {
 	private List<ItemFactura> items;
 	
 
-	public Double getTotal() {
-		Double total = 0.0;
-		for(int i = 0; i < items.size(); i++) {
-			total += items.get(i).calcularImporte();
-		}
-		return total;
-	}
 	//Con este método PrePersist antes de insertar en la BBDD la factura obtendra la fecha actual 
 	@PrePersist
 	public void prePersist() {
