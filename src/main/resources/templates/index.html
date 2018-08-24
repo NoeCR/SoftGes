@@ -29,12 +29,18 @@
 						<h6 th:text="${producto.nombre}"></h6>
 						<h4>
 							<span class="label label-default" th:text="${producto.precio} + €">precio</span> <br />
-							<span class="label label-default" th:text="${producto.categoria.nombre}">categoria</span>  <br />
+							<!-- Bloque para mostrar el stock del producto y dependiendo de este un span distinto -->							
+							<span th:if="${producto.stock >= 5}" th:text="'Quedan: ' + ${producto.stock} + ' .uds'" class="badge badge-success"></span>
+							<span th:if="${producto.stock < 5 && producto.stock > 0}" th:text="'Quedan: ' + ${producto.stock} + ' .uds'" class="badge badge-warning"></span>
+							<span th:if="${producto.stock <= 0}" th:text="'Quedan: ' + ${producto.stock} + ' .uds'" class="badge badge-danger" ></span>
+							<br />
+							<!-- /////////////////////////////////////////////////// -->
 							<span class="label label-default">Valoración</span>
 						</h4>
 						<p>
 							<a class="btn btn-sm btn-primary" th:href="@{/verProducto/} + ${producto.id}" role="button" th:value="${producto.id}">Ver detalle</a>	
-							<a class="btn btn-sm btn-primary" th:href="@{/car/} + ${producto.id}" role="button" th:value="${producto.id}">Añadir al Carro</a>							
+							<a th:if="${producto.stock > 0}" class="btn btn-sm btn-primary" th:href="@{/car/} + ${producto.id}" role="button" th:value="${producto.id}" id="carro">Añadir al Carro</a>
+							<a th:if="${producto.stock <= 0}" class="btn btn-sm btn-primary disabled-btn" th:href="@{/car/} + ${producto.id}" role="button" th:value="${producto.id}" id="carro">Añadir al Carro</a>							
 						</p>
 			</div>
 		</div>						

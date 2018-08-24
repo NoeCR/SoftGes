@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.softgest.app.models.entity.ItemFactura;
 import com.softgest.app.models.entity.Producto;
 import com.softgest.app.models.entity.Usuario;
 import com.softgest.app.models.entity.Valoracion;
@@ -36,7 +37,13 @@ public class ProductoController {
 	@GetMapping(value="/verProducto/{id}")
 	public String verProducto(Model model, HttpSession session, @PathVariable(value="id") Long id, RedirectAttributes flash) {
 		model.addAttribute("usuario", (Usuario) session.getAttribute("usuario"));
-		Producto producto = productoService.findById(id);		
+		Producto producto = productoService.findById(id);	
+		@SuppressWarnings("unchecked")
+		List<ItemFactura> items = (List<ItemFactura>) session.getAttribute("items");
+		if(items != null) {
+			int numItems = items.size();
+			model.addAttribute("numItems", numItems);
+		}
 		if(producto == null) {
 			flash.addFlashAttribute("error", "Error: no ha podido cargarse el producto");
 			return "redirect:/";

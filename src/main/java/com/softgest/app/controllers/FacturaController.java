@@ -17,9 +17,10 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.softgest.app.models.entity.Factura;
 import com.softgest.app.models.entity.ItemFactura;
-
+import com.softgest.app.models.entity.Producto;
 import com.softgest.app.models.entity.Usuario;
 import com.softgest.app.models.service.IFacturaService;
+import com.softgest.app.models.service.IProductoService;
 import com.softgest.app.util.CalculoLinea;
 
 @Controller
@@ -29,8 +30,8 @@ public class FacturaController {
 	@Autowired
 	private IFacturaService facturaService;
 	
-	//@Autowired
-	//private IProductoService productoService;
+	@Autowired
+	private IProductoService productoService;
 	
 	//@Autowired
 	//private IItemFacturaService itemFacturaService;
@@ -79,16 +80,31 @@ public class FacturaController {
 									HttpSession session,
 									SessionStatus status) {
 		
-		Factura factura = (Factura) session.getAttribute("factura");		
-		
+		Factura factura = (Factura) session.getAttribute("factura");	
+		@SuppressWarnings("unchecked")
+		List<ItemFactura> items = (List<ItemFactura>) session.getAttribute("items");
+		if(factura.getItems().isEmpty()) {
+			model.put("titulo", "Realizar compra");
+			model.put("error", "Error: La factura NO puede no tener productos!");
+			return "redirect:/cart/";
+		}
 		for(ItemFactura item:  factura.getItems()) {
 			item.setLineaTotal(CalculoLinea.calculoLinea(item.getCantidad(), item.getProducto().getPrecio()));
-			
+			Producto p = item.getProducto();
+			if((p.getStock() - item.getCantidad()) < 0) {
+				flash.addFlashAttribute("error", "Lo sentimos pero no qudan suficientes unidades del producto: " + item.getProducto().getNombre());
+				CalculoLinea.resetTotal();
+				return "redirect:/cart/";
+			}else {
+				p.restStock(item.getCantidad());
+				productoService.saveProducto(p);
+			}
 			
 		}
 		factura.setFacturaTotal(CalculoLinea.total);
 		CalculoLinea.resetTotal();
 		facturaService.saveFactura(factura);
+		items.clear();
 		status.setComplete();
 		flash.addFlashAttribute("success", "Factura creada con éxito!");
 		

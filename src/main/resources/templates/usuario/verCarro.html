@@ -14,7 +14,7 @@
 						<th th:text="${item.producto.precio}" th:value="${item.producto.precio}" class="th-fac" id="precio"></th>
 						<th th:text="${item.cantidad}" th:value="${item.cantidad}" class="th-fac"></th>
 						
-						<td><span name="cantidad" id="cantidad" th:text="${T(com.softgest.app.util.CalculoLinea).calculoLinea(item.cantidad,item.producto.precio )}">0</span></td>
+						<td><span id="cantidad" th:text="${T(com.softgest.app.util.CalculoLinea).calculoLinea(item.cantidad,item.producto.precio )}">0</span></td>
 						<td><a href="#" class="btn btn-danger btn-xs"  th:href="@{/car/remove/} + ${item.producto.id}">X</a></td>		
 					</tr>
 				</tbody>

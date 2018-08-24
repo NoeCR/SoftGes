@@ -85,7 +85,9 @@ public class Producto implements Serializable {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
-	
+	public void restStock(int cantidad) {
+		stock -= cantidad;
+	}
 	public String getImg() {
 		return img;
 	}

@@ -93,3 +93,7 @@
 	vertical-align: inherit;
 	border: none;
 }
+.disabled-btn{
+	pointer-events:none;
+	opacity: 0.5;
+}
