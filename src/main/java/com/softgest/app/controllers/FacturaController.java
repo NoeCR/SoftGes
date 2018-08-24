@@ -10,6 +10,7 @@ import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -21,6 +22,7 @@ import com.softgest.app.models.entity.Producto;
 import com.softgest.app.models.entity.Usuario;
 import com.softgest.app.models.service.IFacturaService;
 import com.softgest.app.models.service.IProductoService;
+import com.softgest.app.models.service.IUsuarioService;
 import com.softgest.app.util.CalculoLinea;
 
 @Controller
@@ -32,6 +34,9 @@ public class FacturaController {
 	
 	@Autowired
 	private IProductoService productoService;
+	
+	@Autowired
+	private IUsuarioService usuarioService;
 	
 	//@Autowired
 	//private IItemFacturaService itemFacturaService;
@@ -109,5 +114,50 @@ public class FacturaController {
 		flash.addFlashAttribute("success", "Factura creada con éxito!");
 		
 		return "redirect:/";
+	}
+	
+	@GetMapping(value = "/usuario/verFacturas/{id}")
+	public String verFacturas(@PathVariable(value="id") Long usuario_id, Map<String, Object> model, RedirectAttributes flash, HttpSession session) {
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
+		@SuppressWarnings("unchecked")
+		List<ItemFactura> items = (List<ItemFactura>) session.getAttribute("items");
+		if(items != null) {
+			int numItems = items.size();
+			model.put("numItems", numItems);
+		}else {
+			int numItems = 0;
+			model.put("numItems", numItems);
+		}
+		List<Factura> facturas =  facturaService.findByUsuarioId(usuario_id);
+		if(facturas.isEmpty()) {
+			flash.addAttribute("warning", "No tiene ninguna factura.");
+			return "/usuario/verFacturas";
+		}
+		Usuario cliente = usuarioService.buscarPorId(usuario_id);
+		cliente.setFacturas(facturas);
+		logger.info("Informacion del Cliente y sus facturas: " + cliente.toString());
+		model.put("cliente", cliente);
+		model.put("usuario", usuario);
+		return "/usuario/verFacturas";
+	}
+	
+	@GetMapping(value = "/usuario/verDetalleFactura/{id}")
+	public String verDetalleFactura(@PathVariable(value="id") Long factura_id, Map<String, Object> model, RedirectAttributes flash, HttpSession session) {
+		Usuario usuario = (Usuario) session.getAttribute("usuario");
+		Factura factura = facturaService.findById(factura_id);
+		@SuppressWarnings("unchecked")
+		List<ItemFactura> items = (List<ItemFactura>) session.getAttribute("items");
+		if(items != null) {
+			int numItems = items.size();
+			model.put("numItems", numItems);
+		}else {
+			int numItems = 0;
+			model.put("numItems", numItems);
+		}
+		List<ItemFactura> itemsfactura = factura.getItems();
+		model.put("items", itemsfactura);
+		model.put("factura", factura);
+		model.put("usuario", usuario);
+		return "/usuario/verDetalleFactura";
 	}
 }

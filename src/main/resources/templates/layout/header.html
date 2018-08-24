@@ -25,6 +25,7 @@
 
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">							
 							<a sec:authorize="hasRole('ROLE_USER')"class="dropdown-item item-u" th:href="@{/usuario/verDetalle}">Mi cuenta</a>
+							<a sec:authorize="hasRole('ROLE_USER')"class="dropdown-item item-u" th:href="@{/usuario/verFacturas/} + ${usuario.id}">Mis pedidos</a>
 							<a sec:authorize="hasRole('ROLE_ADMIN')"class="dropdown-item item-u" th:href="@{/admin/}" th:text="Gestión"></a>
 							<form id="logoutForm" th:action="@{/logout}" method="post">
 								<button class="dropdown-item item-u" onclick="document.getElementById('logoutForm').submit();" type="submit">Sign Out</button>

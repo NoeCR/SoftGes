@@ -31,7 +31,9 @@ public class ItemFactura implements Serializable {
 	@JoinColumn(name="producto_id")
 	private Producto producto;
 	
-	
+	public ItemFactura() {
+		
+	}
 	public ItemFactura(Producto producto) {		
 		this.cantidad = 1;
 		this.producto = producto;

@@ -30,9 +30,9 @@
 						<h4>
 							<span class="label label-default" th:text="${producto.precio} + €">precio</span> <br />
 							<!-- Bloque para mostrar el stock del producto y dependiendo de este un span distinto -->							
-							<span th:if="${producto.stock >= 5}" th:text="'Quedan: ' + ${producto.stock} + ' .uds'" class="badge badge-success"></span>
-							<span th:if="${producto.stock < 5 && producto.stock > 0}" th:text="'Quedan: ' + ${producto.stock} + ' .uds'" class="badge badge-warning"></span>
-							<span th:if="${producto.stock <= 0}" th:text="'Quedan: ' + ${producto.stock} + ' .uds'" class="badge badge-danger" ></span>
+							<span th:if="${producto.stock >= 5}" th:text="'Quedan: ' + ${producto.stock} + ' .uds'" class="badge badge-success span-stock"></span>
+							<span th:if="${producto.stock < 5 && producto.stock > 0}" th:text="'Quedan: ' + ${producto.stock} + ' .uds'" class="badge badge-warning span-stock"></span>
+							<span th:if="${producto.stock <= 0}" th:text="'Quedan: ' + ${producto.stock} + ' .uds'" class="badge badge-danger span-stock" ></span>
 							<br />
 							<!-- /////////////////////////////////////////////////// -->
 							<span class="label label-default">Valoración</span>

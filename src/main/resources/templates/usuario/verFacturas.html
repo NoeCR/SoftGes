@@ -4,26 +4,28 @@
 <body>
 	  <header th:replace="layout/header :: header"></header>
 	  <div class="container main-p py-4">
-		<div th:if="${#list.isEmpty(usuario.facturas)}" class="alert alert-info my-4" th:text="No hay facturas asignadas para el cliente ' + ${usuario.username} +'"></div>
-		<table th:if="${not #list.isEmpty(usuario.facturas)}"class="table table-bordered table-spired my-4">
+	  	<div th:if="${#lists.isEmpty(cliente.facturas)}" class="alert alert-info my-4" th:text="'No hay articulos asignadas para el cliente ' + ${cliente.username}"></div>
+		<table th:if="${not #lists.isEmpty(cliente.facturas)}" class="table table-bordered table-spired my-4">
 			<thead>
 				<tr>
-					<th>Nº Factura:</th>
-					<th>Descripción:</th>
-					<th>Fecha:</th>
-					<th>Total:</th>
-					<th>Detalle</th>
-					<th>PDF</th>
+					<td>NÂº Factura:</td>
+					<td>DescripciÃ³n:</td>
+					<td>Fecha:</td>
+					<td>Total:</td>
+					<td>Detalle</td>
+					<td>PDF</td>
 				</tr>		
 			</thead>
 			<tbody>
-				<tr th:each="factura: ${usuario.facturas}">
-					<th th:text="${factura.id}"></th>
-					<th th:text="${factura.descripcion}">:</th>
-					<th th:text="${factura.createFac}"></th>
-					<th th:text="${factura.total}"></th>
-					<th>Detalle</th>
-					<th>PDF</th>				
+				<tr th:each="factura: ${cliente.facturas}">
+					<td class="td-fac" th:text="${factura.id}"></td>
+					<td class="td-fac" th:text="${factura.descripcion}">:</td>
+					<td class="td-fac" th:text="${factura.createFac}"></td>
+					<td class="td-fac" th:text="${factura.facturaTotal}"></td>
+					<td class="td-fac td-det" sec:authorize="hasRole('ROLE_USER')">
+						<a class="btn btn-success btn-xs btn-detalle" th:href="@{'/usuario/verDetalleFactura/' + ${factura.id}}" th:text="'Detalle pedido'"></a>
+					</td>
+					<td>Ver Factura</td>				
 				</tr>
 			</tbody>		
 		</table>

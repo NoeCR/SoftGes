@@ -53,7 +53,7 @@ public class Factura implements Serializable {
 	@PrePersist
 	public void prePersist() {
 		createFac = new Date();
-		descripcion = "Nueva Factura";
+		descripcion = "Vendido por Soft-Gest";
 	}
 	public Factura() {
 		this.items = new ArrayList<ItemFactura>();

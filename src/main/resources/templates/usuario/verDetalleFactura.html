@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/head :: head"></head>
+<body>
+	  <header th:replace="layout/header :: header"></header>
+	  <div class="container main-p py-4">
+	  	<div th:if="${#lists.isEmpty(items)}" class="alert alert-info my-4" th:text="'Error: No hay articulos asignadas en la factura ' + ${factura.id}"></div>
+		<table th:if="${not #lists.isEmpty(items)}" class="table table-spired my-4 tab-detalle">
+			<thead>
+				<tr>
+					<td>Imagen</td>
+					<td>Nombre</td>
+					<td>precio</td>
+					<td>Cantidad</td>					
+					<td>total</td>
+					<td>valorar</td>
+					<td>PDF</td>
+				</tr>		
+			</thead>
+			<tbody>
+				<tr th:each="item: ${items}" class="tr-det-item">
+					<td class="td-fac td-img-wrap"><img th:src="@{'/uploads/' + ${item.producto.img} }" alt="${item.producto.img}" class="td-det-img"/></td>
+					<td class="td-fac" th:text="${item.producto.nombre}">:</td>
+					<td class="td-fac" th:text="${item.producto.precio}"></td>
+					<td class="td-fac" th:text="${item.cantidad}"></td>
+					<td class="td-fac" th:text="${item.lineaTotal}"></td>
+					<td>
+						<a href="#openModal" class="btn btn-outline-info">Valorar</a>
+						<div id="openModal" class="modalDialog">
+							<div>
+								<a href="#close" title="Close" class="close">X</a>
+								<label class="card-text">Deja un comentario</label><br />		       		
+								<form th:action="@{/saveValor}" method="post">
+									<input type="hidden" name="producto" th:id="${item.producto.id}" th:value="${item.producto.id}"/>
+								    <div class="form-group col-sm-6">
+								    	<span class="span-p">Puntua el producto</span>
+										<select id="puntos" name="puntos" class="custom-select custom-select-lg mb-3 select-p">
+											<option th:value="1">1</option>
+											<option th:value="2">2</option>
+											<option th:value="3">3</option>
+											<option th:value="4">4</option>
+											<option th:value="5">5</option>
+										</select>
+								    </div>
+								    <div class="form-group col-sm-12">
+								    	<textarea rows="10" name="comentario" id="comentario" class="form-control"></textarea>
+								    </div>
+								    <div class="form-group col-sm-3">
+										<input type="submit" class="btn btn-outline-primary" value="Publicar comentario" />
+									</div>
+								</form>
+							</div>
+						</div>
+					</td>	
+					<td>PDF</td>				
+				</tr>
+			</tbody>		
+		</table>
+</div>
+	
+<footer th:replace="layout/footer :: footer"></footer>
+	<script>
+		tinymce.init({
+	       selector: '#comentario',
+	       plugins: "textcolor, table lists code",
+	       toolbar:" undo redo | bold italic | alignleft aligncenter alignright alignjustify \n\
+	                 | bullist numlist outdent indent | forecolor backcolor table code"
+	     });
+   	</script>
+</body>
+</html>

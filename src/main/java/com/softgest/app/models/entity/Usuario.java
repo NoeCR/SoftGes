@@ -57,7 +57,6 @@ public class Usuario implements Serializable{
 	public Usuario() {
 		this.enabled = true;
 		this.facturas = new ArrayList<Factura>();
-		//this.items = new ArrayList<ItemFactura>();
 	}
 
 	public List<ItemFactura> getItems() {
@@ -126,4 +125,10 @@ public class Usuario implements Serializable{
 	public void addFactura(Factura factura) {
 		facturas.add(factura);
 	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", username=" + username + ", enabled=" + enabled;
+	}
+	
 }
