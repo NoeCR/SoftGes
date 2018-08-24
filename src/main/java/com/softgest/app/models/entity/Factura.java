@@ -43,15 +43,17 @@ public class Factura implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Usuario usuario;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade= CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name="factura_id")
 	private List<ItemFactura> items;
+	
 	
 
 	//Con este método PrePersist antes de insertar en la BBDD la factura obtendra la fecha actual 
 	@PrePersist
 	public void prePersist() {
 		createFac = new Date();
+		descripcion = "Nueva Factura";
 	}
 	public Factura() {
 		this.items = new ArrayList<ItemFactura>();
@@ -95,5 +97,16 @@ public class Factura implements Serializable {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-
+	public Double getFacturaTotal() {
+		return facturaTotal;
+	}
+	public void setFacturaTotal(Double facturaTotal) {
+		this.facturaTotal = facturaTotal;
+	}
+	@Override
+	public String toString() {
+		return "Factura [id=" + id + ", descripcion=" + descripcion + ", createFac=" + createFac + ", facturaTotal="
+				+ facturaTotal + ", usuario=" + usuario + ", items=" + items + "]";
+	}
+	
 }

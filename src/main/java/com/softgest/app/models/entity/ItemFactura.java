@@ -63,6 +63,14 @@ public class ItemFactura implements Serializable {
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
+	
+	public Double getLineaTotal() {
+		return lineaTotal;
+	}
+
+	public void setLineaTotal(Double lineaTotal) {
+		this.lineaTotal = lineaTotal;
+	}
 
 	@Override
 	public String toString() {

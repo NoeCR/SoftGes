@@ -4,5 +4,5 @@ import com.softgest.app.models.entity.Factura;
 
 public interface IFacturaService {
 
-	public void savefactura(Factura factura);
+	public void saveFactura(Factura factura);
 }

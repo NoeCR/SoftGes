@@ -4,26 +4,36 @@ package com.softgest.app.controllers;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
+
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.softgest.app.models.entity.Factura;
 import com.softgest.app.models.entity.ItemFactura;
+
 import com.softgest.app.models.entity.Usuario;
+import com.softgest.app.models.service.IFacturaService;
+import com.softgest.app.util.CalculoLinea;
 
 @Controller
 @SessionAttributes("factura") 
 public class FacturaController {
 	
-	//@Autowired
-	//private IUsuarioService usuarioService;
+	@Autowired
+	private IFacturaService facturaService;
 	
 	//@Autowired
 	//private IProductoService productoService;
+	
+	//@Autowired
+	//private IItemFacturaService itemFacturaService;
 	
 	protected final Log logger = LogFactory.getLog(this.getClass());
 
@@ -63,8 +73,24 @@ public class FacturaController {
 		return "usuario/verCarro";
 	}
 	
-	@PostMapping(value="/cart/save")
-	public String guardarFactura() {
+	@PostMapping(value="/cart/save/")
+	public String guardarFactura(Map<String, Object> model, 
+									RedirectAttributes flash, 
+									HttpSession session,
+									SessionStatus status) {
+		
+		Factura factura = (Factura) session.getAttribute("factura");		
+		
+		for(ItemFactura item:  factura.getItems()) {
+			item.setLineaTotal(CalculoLinea.calculoLinea(item.getCantidad(), item.getProducto().getPrecio()));
+			
+			
+		}
+		factura.setFacturaTotal(CalculoLinea.total);
+		CalculoLinea.resetTotal();
+		facturaService.saveFactura(factura);
+		status.setComplete();
+		flash.addFlashAttribute("success", "Factura creada con éxito!");
 		
 		return "redirect:/";
 	}
