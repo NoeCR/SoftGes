@@ -25,7 +25,7 @@
 					<div class="form-group col-sm-12">
 						<div class="panel panel-default ">
 						  <div class="panel-heading info-p">Información personal</div>
-						 <input type="hidden" th:value="${cliente.id}" name="id"/>						  
+						  <input type="hidden" th:value="${cliente.id}" name="id"/>						  
 						  <div class="panel-body info-content">
 						  		<input th:if="${cliente} != null" type="text" name="nombre" id="nombre" class="form-control" th:field="${cliente.nombre}"placeholder="Nombre de Usuario"  required />
 						  		<input th:if="${cliente} == null" type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre de Usuario"  required />		
@@ -47,6 +47,7 @@
 						  		<input th:if="${cliente} == null" type="text" name="telf" id="telf" class="form-control" placeholder="Teléfono"  required />		
 						  </div>
 						  <div class="panel-body info-content">
+						  		<a sec:authorize="hasRole('ROLE_ADMIN')" class="btn btn-outline-primary a-save-u" th:href="@{/admin/updateUser/} + ${cliente.usuario.id}" th:text="'Establecer Administrador'" onclick="return confirm('Esta seguro que quiere establecer el Rol de este usuario como administrador?');"></a>
 								<input type="submit" class="btn btn-outline-primary btn-save-u" value="Guardar cambios" />
 						  </div>
 						  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>

@@ -37,7 +37,7 @@
 						th:href="@{'/usuario/verFacturas/' + ${cliente.id}}"
 						th:text="'ver facturas'"></a></td>
 					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
-						class="btn btn-primary btn-xs" th:href="@{/usuario/verFacturas/} + ${cliente.id}"
+						class="btn btn-primary btn-xs" th:href="@{/usuario/verDetalleUsuario/} + ${cliente.id}"
 						th:text="'editar'"></a></td>
 					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
 						class="btn btn-danger btn-xs"

@@ -203,6 +203,10 @@
 	float: right;
 	margin-top: 1rem;
 }
+.a-save-u{
+	float: left;
+	margin-top: 1rem;
+}
 .main-u{
 	max-width: 50%;
 }

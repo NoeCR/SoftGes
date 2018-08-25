@@ -34,11 +34,10 @@ public class UsuarioController {
 	public String verUsuario(@PathVariable(value = "id") Long usuario_id, Model model, HttpSession session) {
 		model.addAttribute("usuario", (Usuario) session.getAttribute("usuario"));
 		logger.info("ID del usuario: " + usuario_id);
-		UsuarioDetalle cliente = usuarioDetalleService.findByUsuario(usuario_id);
-		if(cliente != null) {
-			logger.info("Informacion de los detalles de usuario: " + cliente.toString());
-			model.addAttribute("cliente", cliente);
-		}
+		UsuarioDetalle cliente = usuarioDetalleService.findByUsuario(usuario_id);	
+			
+		model.addAttribute("cliente", cliente);
+		
 		return "/usuario/verDetalleUsuario";
 	}
 }
