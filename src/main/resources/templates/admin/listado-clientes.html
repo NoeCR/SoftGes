@@ -23,7 +23,7 @@
 			<tbody>
 				<tr th:each="cliente: ${clientes}">
 					<td sec:authorize="hasRole('ROLE_USER')"><a
-						class="btn btn-primary btn-xs" th:href="@{/ver/} + ${cliente.id}"
+						class="btn btn-primary btn-xs" th:href="@{/usuario/verFacturas/} + ${cliente.id}"
 						th:text="${cliente.id}"></a></td>
 					<td th:text="${cliente.username}"></td>
 					<!--	
@@ -34,10 +34,10 @@
 					-->
 					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
 						class="btn btn-success btn-xs"
-						th:href="@{'/factura/form/' + ${cliente.id}}"
+						th:href="@{'/usuario/verFacturas/' + ${cliente.id}}"
 						th:text="'ver facturas'"></a></td>
 					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
-						class="btn btn-primary btn-xs" th:href="@{/form/} + ${cliente.id}"
+						class="btn btn-primary btn-xs" th:href="@{/usuario/verFacturas/} + ${cliente.id}"
 						th:text="'editar'"></a></td>
 					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
 						class="btn btn-danger btn-xs"

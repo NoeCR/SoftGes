@@ -46,6 +46,10 @@
     line-height: 2.2em;
     margin: 5px;
 }
+.span-p-det{
+	line-height: 2.2em;
+    margin: 5px;
+}
 .span-stock{
 	font-size: 50%;
 }
@@ -174,3 +178,31 @@
 	box-shadow: 1px 1px 3px #000;
 }
 .close:hover { background: #00d9ff; }
+/*
+*Bloque CSS para mostrar las estrellas de la media de la valoracion del producto
+*
+*/
+.ec-stars-wrapper {
+	/* Espacio entre los inline-block (los hijos, los `a`) 
+	   http://ksesocss.blogspot.com/2012/03/display-inline-block-y-sus-empeno-en.html */
+	font-size: 0;
+	/* Podríamos quitarlo, 
+		pero de esta manera (siempre que no le demos padding), 
+		sólo aplicará la regla .ec-stars-wrapper:hover a cuando
+		también se esté haciendo hover a alguna estrella */
+	display: inline-block;
+}
+.ec-stars-wrapper span {
+	text-decoration: none;
+	display: inline-block;
+	/* Volver a dar tamaño al texto */
+	font-size: 26px;	
+	color: #888;
+}
+.btn-save-u{
+	float: right;
+	margin-top: 1rem;
+}
+.main-u{
+	max-width: 50%;
+}

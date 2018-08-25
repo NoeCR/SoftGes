@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/head :: head"></head>
+<body>
+	<header th:replace="layout/header :: header"></header>
+	<div class="container main-u py-4">	
+
+		<div class="card border-primary text-center">
+			 
+			<div class="card-body">
+
+				<form th:action="@{/save}" th:object="${usuario}" method="post">
+					<input type="hidden" th:value="*{id}" name="usuario_id"/> 
+					<fieldset id="field-user" disabled>
+						<div class="form-group col-sm-12">
+							<input type="text" name="username" th:field="*{username}" id="username" class="form-control" placeholder="Nick de Usuario" th:errorclass="'form-control alert-danger'" autofocus required />
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
+						</div>
+	
+						<div class="form-group col-sm-12">
+							<input type="password" name="password" th:field="*{password}" id="password" class="form-control" placeholder="Password" required />
+						</div>
+					</fieldset>
+					
+					<div class="form-group col-sm-12">
+						<div class="panel panel-default ">
+						  <div class="panel-heading info-p">Información personal</div>
+						 <input type="hidden" th:value="${cliente.id}" name="id"/>						  
+						  <div class="panel-body info-content">
+						  		<input th:if="${cliente} != null" type="text" name="nombre" id="nombre" class="form-control" th:field="${cliente.nombre}"placeholder="Nombre de Usuario"  required />
+						  		<input th:if="${cliente} == null" type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre de Usuario"  required />		
+						  </div>
+						   <div class="panel-body info-content">
+						  		<input th:if="${cliente} != null" type="text" name="apellidos" id="apellidos" class="form-control" th:field="${cliente.apellidos}" placeholder="Apellidos"  required />	
+						  		<input th:if="${cliente} == null" type="text" name="apellidos" id="apellidos" class="form-control" placeholder="Apellidos"  required />	
+						  </div>
+						   <div class="panel-body info-content">
+						   		<input th:if="${cliente} != null" type="text" name="email" id="email" class="form-control" th:field="${cliente.email}" placeholder="Email"  required />
+						  		<input th:if="${cliente} == null" type="text" name="email" id="email" class="form-control" placeholder="Email"  required />		
+						  </div>
+						   <div class="panel-body info-content">
+						   		<input th:if="${cliente} != null" type="text" name="direccion" id="direccion" class="form-control" th:field="${cliente.direccion}"  required />	
+						  		<input th:if="${cliente} == null" type="text" name="direccion" id="direccion" class="form-control" placeholder="Dirección"  required />		
+						  </div>
+						   <div class="panel-body info-content">
+						   		<input th:if="${cliente} != null" type="text" name="telf" id="telf" class="form-control" th:field="${cliente.telf}"  required />
+						  		<input th:if="${cliente} == null" type="text" name="telf" id="telf" class="form-control" placeholder="Teléfono"  required />		
+						  </div>
+						  <div class="panel-body info-content">
+								<input type="submit" class="btn btn-outline-primary btn-save-u" value="Guardar cambios" />
+						  </div>
+						  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+						</div>
+					</div>
+					
+
+				</form>
+
+			</div>
+
+		</div>
+			
+	</div>
+<footer th:replace="layout/footer :: footer"></footer>
+</body>
+</html>

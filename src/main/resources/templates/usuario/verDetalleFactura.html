@@ -20,7 +20,7 @@
 			<tbody>
 				<tr th:each="item: ${items}" class="tr-det-item">
 					<td class="td-fac td-img-wrap"><img th:src="@{'/uploads/' + ${item.producto.img} }" alt="${item.producto.img}" class="td-det-img"/></td>
-					<td class="td-fac" th:text="${item.producto.nombre}">:</td>
+					<td class="td-fac" th:text="${item.producto.nombre}"></td>
 					<td class="td-fac" th:text="${item.producto.precio}"></td>
 					<td class="td-fac" th:text="${item.cantidad}"></td>
 					<td class="td-fac" th:text="${item.lineaTotal}"></td>
@@ -33,7 +33,7 @@
 								<form th:action="@{/saveValor}" method="post">
 									<input type="hidden" name="producto" th:id="${item.producto.id}" th:value="${item.producto.id}"/>
 								    <div class="form-group col-sm-6">
-								    	<span class="span-p">Puntua el producto</span>
+								    	<span class="span-p-det">Puntua el producto</span>
 										<select id="puntos" name="puntos" class="custom-select custom-select-lg mb-3 select-p">
 											<option th:value="1">1</option>
 											<option th:value="2">2</option>

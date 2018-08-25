@@ -5,7 +5,7 @@
 	  <header th:replace="layout/header :: header"></header>
 	  <div class="container main-p py-4">
 	  	<div th:if="${#lists.isEmpty(cliente.facturas)}" class="alert alert-info my-4" th:text="'No hay articulos asignadas para el cliente ' + ${cliente.username}"></div>
-		<table th:if="${not #lists.isEmpty(cliente.facturas)}" class="table table-bordered table-spired my-4">
+		<table th:if="${not #lists.isEmpty(cliente.facturas)}" class="table table-bordered table-spired my-4 tab-detalle">
 			<thead>
 				<tr>
 					<td>Nº Factura:</td>

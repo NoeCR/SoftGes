@@ -22,6 +22,7 @@ import com.softgest.app.models.entity.Usuario;
 import com.softgest.app.models.entity.Valoracion;
 import com.softgest.app.models.service.IProductoService;
 import com.softgest.app.models.service.IValoracionService;
+import com.softgest.app.util.CalculoMedia;
 
 @Controller
 public class ProductoController {
@@ -43,12 +44,18 @@ public class ProductoController {
 		if(items != null) {
 			int numItems = items.size();
 			model.addAttribute("numItems", numItems);
+		}else {
+			int numItems = 0;
+			model.addAttribute("numItems", numItems);
 		}
 		if(producto == null) {
 			flash.addFlashAttribute("error", "Error: no ha podido cargarse el producto");
 			return "redirect:/";
 		}
 		List<Valoracion> valoraciones = valoracionService.findByProducto(producto.getId());
+		double media = CalculoMedia.calculoMedia(valoraciones);
+		logger.info("Media de la puntiacion del prodcuto: " + media);
+		model.addAttribute("media", media);
 		model.addAttribute("producto", producto);
 		model.addAttribute("valoraciones", valoraciones);
 	return "/producto/verProducto";	

@@ -5,13 +5,8 @@
 			<button class="navbar-toggler" type="button" data-toggle="collapse" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<div class="collapse navbar-collapse">
-			 
+			<div class="collapse navbar-collapse">			 
 				<ul class="navbar-nav mr-auto">
-				<!-- 
-					<li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="#about" th:href="@{/}">Cliente</a></li>
-				-->
 				</ul>
 			
 				<ul class="navbar-nav navbar-right">
@@ -24,7 +19,7 @@
 						</a>
 
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">							
-							<a sec:authorize="hasRole('ROLE_USER')"class="dropdown-item item-u" th:href="@{/usuario/verDetalle}">Mi cuenta</a>
+							<a sec:authorize="hasRole('ROLE_USER')"class="dropdown-item item-u" th:href="@{/usuario/verDetalleUsuario/} + ${usuario.id}">Mi cuenta</a>
 							<a sec:authorize="hasRole('ROLE_USER')"class="dropdown-item item-u" th:href="@{/usuario/verFacturas/} + ${usuario.id}">Mis pedidos</a>
 							<a sec:authorize="hasRole('ROLE_ADMIN')"class="dropdown-item item-u" th:href="@{/admin/}" th:text="Gestión"></a>
 							<form id="logoutForm" th:action="@{/logout}" method="post">

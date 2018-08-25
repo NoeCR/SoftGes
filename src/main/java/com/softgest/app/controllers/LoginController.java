@@ -63,17 +63,23 @@ public class LoginController {
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
 	public String guardarRegistro(@ModelAttribute Usuario usuario, BindingResult result, Model model, RedirectAttributes flash, SessionStatus status, 
-			@ModelAttribute UsuarioDetalle usuarioDetalle) {
+			@ModelAttribute UsuarioDetalle usuarioDetalle,
+			@RequestParam(value = "usuario_id", required = false) Long usuario_id) {
+		if(usuario.getId() == null) {
+			String hashedPassword = passwordEncoder.encode(usuario.getPassword());
+			usuario.setPassword(hashedPassword);
+			usuarioService.insertar(usuario);
+			
+			Role rol = new Role();
+			rol.setUser(usuario);	
+			roleService.insert(rol);
+			
+			usuarioDetalle.setUsuario(usuario);
+		}	
+		if(usuarioDetalle.getId() != null) {
+			usuarioDetalle.setUsuario(usuarioService.buscarPorId(usuario_id));
+		}
 		
-		String hashedPassword = passwordEncoder.encode(usuario.getPassword());
-		usuario.setPassword(hashedPassword);
-		usuarioService.insertar(usuario);
-		
-		Role rol = new Role();
-		rol.setUser(usuario);	
-		roleService.insert(rol);
-		
-		usuarioDetalle.setUsuario(usuario);
 		usuarioDetalleService.saveUsuarioDetalle(usuarioDetalle);
 		
 		status.setComplete();

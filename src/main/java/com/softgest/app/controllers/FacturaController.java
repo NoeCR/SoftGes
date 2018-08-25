@@ -119,6 +119,7 @@ public class FacturaController {
 	@GetMapping(value = "/usuario/verFacturas/{id}")
 	public String verFacturas(@PathVariable(value="id") Long usuario_id, Map<String, Object> model, RedirectAttributes flash, HttpSession session) {
 		Usuario usuario = (Usuario) session.getAttribute("usuario");
+		model.put("usuario", usuario);
 		@SuppressWarnings("unchecked")
 		List<ItemFactura> items = (List<ItemFactura>) session.getAttribute("items");
 		if(items != null) {
@@ -130,14 +131,13 @@ public class FacturaController {
 		}
 		List<Factura> facturas =  facturaService.findByUsuarioId(usuario_id);
 		if(facturas.isEmpty()) {
-			flash.addAttribute("warning", "No tiene ninguna factura.");
-			return "/usuario/verFacturas";
+			flash.addAttribute("warning", "No tiene ninguna factura.");			
 		}
 		Usuario cliente = usuarioService.buscarPorId(usuario_id);
 		cliente.setFacturas(facturas);
 		logger.info("Informacion del Cliente y sus facturas: " + cliente.toString());
 		model.put("cliente", cliente);
-		model.put("usuario", usuario);
+		
 		return "/usuario/verFacturas";
 	}
 	
