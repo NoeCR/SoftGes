@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -116,6 +117,54 @@ public class AdminController {
 	}
 	
 	@Secured("ROLE_ADMIN")
+	@GetMapping(value = "/modProduct/{id}")
+	public String modProduct(@PathVariable("id") Long producto_id, Model model, HttpSession session) {
+		model.addAttribute("usuario", (Usuario) session.getAttribute("usuario"));
+		Producto producto = productoService.findById(producto_id);
+		model.addAttribute("producto", producto);
+		List<Categoria> categorias = categoriaService.findAll();
+		model.addAttribute("categorias", categorias);
+		return "/admin/formUpdateProduct";
+	}
+	
+	@Secured("ROLE_ADMIN")
+	@PostMapping(value="/actualizaProducto")
+	public String actualizarProducto(@Valid Producto producto, @RequestParam(value = "file" ,required = false) MultipartFile img, BindingResult result, Model model, HttpSession session, RedirectAttributes flash, SessionStatus status, @RequestParam(value = "create_pro" ,required = false) String createPro) {
+		model.addAttribute("usuario", (Usuario) session.getAttribute("usuario"));
+		//producto.setImg(img.getOriginalFilename());
+		//logger.info("fecha de creacion de producto: " + createPro.length());
+		producto.setCreatePro(Date.valueOf(createPro));
+		logger.info("Información del Producto: ".concat(producto.toString()));
+		
+		if(result.hasErrors()) {
+			flash.addFlashAttribute("error", "Infromación del producto no valida.");
+			return "/admin/formProducto";
+		}
+		
+		if(!img.isEmpty()) {
+			Path dirRecursos = Paths.get("src//main//resources//static/uploads");
+			String rootPath = dirRecursos.toFile().getAbsolutePath();
+			try {
+				byte[] bytes = img.getBytes();
+				Path rutaCompleta = Paths.get(rootPath + "//" + img.getOriginalFilename());
+				Files.write(rutaCompleta, bytes);
+				flash.addFlashAttribute("info", "Imagen subida correctamente '" + img.getOriginalFilename() + "'");
+				producto.setImg(img.getOriginalFilename());
+			} catch (IOException e) {				
+				e.printStackTrace();
+			}
+		}else {
+			producto.setImg(productoService.findById(producto.getId()).getImg());
+		}
+		productoService.saveProducto(producto);
+		status.setComplete();
+		flash.addFlashAttribute("info", "Producto guardado con exito");
+		model.addAttribute("categorias", categoriaService.findAll());
+	
+		return "/admin/listado-productos";
+	}
+	
+	@Secured("ROLE_ADMIN")
 	@GetMapping(value = "/updateUser/{id}")
 	public String setAdmin(Model model, HttpSession session, @PathVariable(value = "id") Long usuario_id, RedirectAttributes flash) {
 		model.addAttribute("usuario", (Usuario) session.getAttribute("usuario"));
@@ -139,6 +188,34 @@ public class AdminController {
 			}else {
 				model.addAttribute("info", "Este usuario ya es administrador.");
 			}				
+		}
+		return "/admin/listado-clientes";
+	}
+	
+	@Secured("ROLE_ADMIN")
+	@GetMapping(value = "/eliminar/{id}")
+	public String deleteUser(Model model, HttpSession session, @PathVariable(value = "id") Long usuario_id, RedirectAttributes flash) {
+		model.addAttribute("usuario", (Usuario) session.getAttribute("usuario"));
+		model.addAttribute("clientes", usuarioService.buscarTodos());
+		Usuario user = usuarioService.buscarPorId(usuario_id);
+		if(user != null){
+			user.setEnabled(false);
+			usuarioService.insertar(user);
+			model.addAttribute("info", "Usuario deshabilitado!");
+		}
+		return "/admin/listado-clientes";
+	}
+	
+	@Secured("ROLE_ADMIN")
+	@GetMapping(value = "/activar/{id}")
+	public String activeUser(Model model, HttpSession session, @PathVariable(value = "id") Long usuario_id, RedirectAttributes flash) {
+		model.addAttribute("usuario", (Usuario) session.getAttribute("usuario"));
+		model.addAttribute("clientes", usuarioService.buscarTodos());
+		Usuario user = usuarioService.buscarPorId(usuario_id);
+		if(user != null){
+			user.setEnabled(true);
+			usuarioService.insertar(user);
+			model.addAttribute("info", "Usuario habilitado!");
 		}
 		return "/admin/listado-clientes";
 	}

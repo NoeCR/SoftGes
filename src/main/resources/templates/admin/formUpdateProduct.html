@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout/head :: head"></head>
+<body>
+
+	<header th:replace="layout/header :: header"></header>
+
+	<div class="container py-4">		
+		<div class="card-body" >
+			<button type="button" onClick="activaEdicion(); return confirm('Estas seguro de querer modificar este producto?');"class="btn btn-outline-warning btn-p-mod">Editar Producto</button>			
+			<form th:action="@{/admin/actualizaProducto}" id="form-p" method="post" th:object="${producto}" enctype="multipart/form-data">
+				<input type="hidden" name="id" th:id="*{id}" th:value="*{id}"/>
+				<input type="hidden" name="create_pro" th:id="*{createPro}" th:value="*{createPro}"/>
+				<fieldset>
+					<div class="form-group col-sm-6">						
+						<span class="span-p">Nombre del Producto</span>
+						<input type="text" name="nombre" id="nombre" class="form-control" th:field="*{nombre}" autofocus required />
+					</div>	
+					
+					<div class="form-group col-sm-6">
+						<span class="span-p">Precio</span>
+						<input type="text" name="precio" id="precio" class="form-control" th:field="*{precio}"  required />
+					</div>
+					
+					<div class="form-group col-sm-6">						
+						<span class="span-p">Seleccione la categoria</span>
+						<select id="categoria" name="categoria" class="select-p">
+							<option th:each="cat: ${categorias}" th:value="${cat.id}" th:text="${cat.nombre}" th:selected="${cat.id} == *{categoria.id}"></option>
+						</select>
+					</div>
+					
+					<div class="form-group col-sm-6">						
+						<span class="span-p">Stock</span>
+						<input type="number" name="stock" id="" class="form-control" th:field="*{stock}"  required />
+					</div>
+					
+					<div class="form-group col-sm-6">						
+						<label for="file" class="span-p">Imagen del producto</label>
+						<input type="file" name="file" class="form-control" th:value="*{img}" />
+					</div>
+					
+					<div class="form-group col-sm-12">						
+						<span class="span-p">descripcion del Producto</span><br /><br />
+						<textarea rows="10" name="descripcion" id="descripcion" class="form-control" th:field="*{descripcion}"></textarea>
+					</div>
+					
+					<div class="form-group col-sm-3">
+						<input type="submit" class="btn btn-lg btn-primary btn-block" value="Modificar Producto" />
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+	
+	<footer th:replace="layout/footer :: footer"></footer>
+	<script type="text/javascript">
+	       tinymce.init({
+	         selector: '#descripcion',
+	         plugins: "textcolor, table lists code",
+	         toolbar:" undo redo | bold italic | alignleft aligncenter alignright alignjustify \n\
+	                   | bullist numlist outdent indent | forecolor backcolor table code"
+	       });
+   	</script>
+   	<script type="text/javascript">
+   	$('#form-p').find('input, textarea, button, select').attr('disabled','disabled');
+	function activaEdicion(){
+		$('#form-p').find('input, textarea, button, select').removeAttr("disabled");
+		}
+   	</script>
+</body>
+</html>

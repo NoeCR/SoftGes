@@ -33,16 +33,21 @@
 					<td th:text="${cliente.createAt}"></td>
 					-->
 					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
-						class="btn btn-success btn-xs"
+						class="btn btn-outline-success"
 						th:href="@{'/usuario/verFacturas/' + ${cliente.id}}"
 						th:text="'ver facturas'"></a></td>
 					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
-						class="btn btn-primary btn-xs" th:href="@{/usuario/verDetalleUsuario/} + ${cliente.id}"
+						class="btn btn-outline-primary" th:href="@{/usuario/verDetalleUsuario/} + ${cliente.id}"
 						th:text="'editar'"></a></td>
-					<td sec:authorize="hasRole('ROLE_ADMIN')"><a
-						class="btn btn-danger btn-xs"
-						th:href="@{/eliminar/} + ${cliente.id}" th:text="'eliminar'"
+					<!-- Activar o desactivar usuarios -->
+					<td sec:authorize="hasRole('ROLE_ADMIN')" th:if="${cliente.enabled}"><a
+						class="btn btn-outline-danger"
+						th:href="@{/admin/eliminar/} + ${cliente.id}" th:text="'Eliminar'"
 						onclick="return confirm('Estas seguro que quieres eliminar?');"></a></td>
+					<td sec:authorize="hasRole('ROLE_ADMIN')" th:if="${not cliente.enabled}"><a
+						class="btn btn-outline-secondary"
+						th:href="@{/admin/activar/} + ${cliente.id}" th:text="'Activar'"
+						onclick="return confirm('Estas seguro que quieres activar este usuario?');"></a></td>
 				</tr>
 			</tbody>
 	
