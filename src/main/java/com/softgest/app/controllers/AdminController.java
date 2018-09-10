@@ -13,6 +13,9 @@ import javax.validation.Valid;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +38,7 @@ import com.softgest.app.models.service.ICategoriaService;
 import com.softgest.app.models.service.IProductoService;
 import com.softgest.app.models.service.IRoleService;
 import com.softgest.app.models.service.IUsuarioService;
+import com.softgest.app.util.PageRenderUtil;
 
 @Controller
 @RequestMapping("/admin")
@@ -58,14 +62,20 @@ public class AdminController {
 	@RequestMapping(value="/", method= RequestMethod.GET)
 	public String mainAdmin(Model model, HttpSession session) {
 		model.addAttribute("usuario", (Usuario) session.getAttribute("usuario"));
+		
 		return "/admin/panel-gestion";
 	}
 	
 	@Secured("ROLE_ADMIN")
 	@GetMapping(value="/listar-clientes")
-	public String listarClientes(Model model, HttpSession session) {
+	public String listarClientes(@RequestParam(name = "page", defaultValue = "0") int page, Model model, HttpSession session) {
 		model.addAttribute("usuario", (Usuario) session.getAttribute("usuario"));
-		model.addAttribute("clientes", usuarioService.buscarTodos());
+		Pageable pageRequest = PageRequest.of(page, 5);
+		Page<Usuario> clientes = usuarioService.findAll(pageRequest);
+		PageRenderUtil<Usuario> pageRender = new PageRenderUtil<Usuario>("/admin/listar-clientes", clientes);
+		
+		model.addAttribute("clientes", clientes);
+		model.addAttribute("page", pageRender);
 		
 		return "/admin/listado-clientes";
 	}
@@ -85,6 +95,7 @@ public class AdminController {
 		model.addAttribute("usuario", (Usuario) session.getAttribute("usuario"));
 		List<Categoria> categorias = categoriaService.findAll();
 		model.addAttribute("categorias", categorias);
+		
 		return "/admin/formProducto";
 	}
 	
@@ -113,6 +124,7 @@ public class AdminController {
 		status.setComplete();
 		flash.addFlashAttribute("info", "Producto guardado con exito");
 		model.addAttribute("categorias", categoriaService.findAll());
+		
 		return "/admin/listado-productos";
 	}
 	
@@ -130,11 +142,8 @@ public class AdminController {
 	@Secured("ROLE_ADMIN")
 	@PostMapping(value="/actualizaProducto")
 	public String actualizarProducto(@Valid Producto producto, @RequestParam(value = "file" ,required = false) MultipartFile img, BindingResult result, Model model, HttpSession session, RedirectAttributes flash, SessionStatus status, @RequestParam(value = "create_pro" ,required = false) String createPro) {
-		model.addAttribute("usuario", (Usuario) session.getAttribute("usuario"));
-		//producto.setImg(img.getOriginalFilename());
-		//logger.info("fecha de creacion de producto: " + createPro.length());
-		producto.setCreatePro(Date.valueOf(createPro));
-		logger.info("Información del Producto: ".concat(producto.toString()));
+		model.addAttribute("usuario", (Usuario) session.getAttribute("usuario"));		
+		producto.setCreatePro(Date.valueOf(createPro));	
 		
 		if(result.hasErrors()) {
 			flash.addFlashAttribute("error", "Infromación del producto no valida.");
@@ -161,6 +170,40 @@ public class AdminController {
 		flash.addFlashAttribute("info", "Producto guardado con exito");
 		model.addAttribute("categorias", categoriaService.findAll());
 	
+		return "/admin/listado-productos";
+	}
+	
+	@Secured("ROLE_ADMIN")
+	@GetMapping(value="/eliminarProducto/{id}")
+	public String eliminarProducto(@PathVariable("id") Long producto_id, Model model, HttpSession session, RedirectAttributes flash) {
+		model.addAttribute("usuario", (Usuario) session.getAttribute("usuario"));
+		model.addAttribute("productos", productoService.findAll());
+		Producto producto = productoService.findById(producto_id);
+		if(producto != null) {
+			producto.setEstado("Inactivo");
+			productoService.saveProducto(producto);
+			flash.addFlashAttribute("info", "Producto desactivado con exito.");
+		}else {
+			flash.addFlashAttribute("error", "Error: no se encontro el producto con ese ID.");
+		}
+		
+		return "/admin/listado-productos";
+	}
+	
+	@Secured("ROLE_ADMIN")
+	@GetMapping(value="/activarProducto/{id}")
+	public String activarProducto(@PathVariable("id") Long producto_id, Model model, HttpSession session, RedirectAttributes flash) {
+		model.addAttribute("usuario", (Usuario) session.getAttribute("usuario"));
+		model.addAttribute("productos", productoService.findAll());
+		Producto producto = productoService.findById(producto_id);
+		if(producto != null) {
+			producto.setEstado("Activo");
+			productoService.saveProducto(producto);
+			flash.addFlashAttribute("info", "Producto desactivado con exito.");
+		}else {
+			flash.addFlashAttribute("error", "Error: no se encontro el producto con ese ID.");
+		}
+		
 		return "/admin/listado-productos";
 	}
 	

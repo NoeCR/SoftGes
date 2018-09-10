@@ -43,7 +43,7 @@ public class IndexController {
 	@RequestMapping(value="/", method= RequestMethod.GET)
 	public String index(Model model, HttpSession session) {
 		model.addAttribute("titulo", "Página Principal");
-		List<Producto> productos = productoService.findAll();
+		List<Producto> productos = productoService.findByEstado("Activo");
 		model.addAttribute("prodcutos", productos);
 		List<Categoria> categorias = categoriaService.findAll();
 		model.addAttribute("categorias", categorias);	

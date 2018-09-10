@@ -28,6 +28,7 @@ public class Producto implements Serializable {
 	
 	private String nombre;
 	private String descripcion;
+	private String estado;
 	private Double precio;
 	private int stock;
 	
@@ -45,7 +46,8 @@ public class Producto implements Serializable {
 	
 	@PrePersist
 	public void prePersist() {
-		createPro = new Date();		
+		createPro = new Date();	
+		estado = "Activo";
 	}
 	
 	public Long getId() {
@@ -103,14 +105,18 @@ public class Producto implements Serializable {
 		this.descripcion = descripcion;
 	}
 
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
 	@Override
 	public String toString() {
 		return "Producto [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precio=" + precio
 				+ ", stock=" + stock + ", img=" + img + ", createPro=" + createPro + ", categoria=" + categoria + "]";
-	}
-
-	
-
-	
+	}	
 	
 }

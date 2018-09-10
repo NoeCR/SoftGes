@@ -2,6 +2,9 @@ package com.softgest.app.models.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.softgest.app.models.entity.Usuario;
 
 public interface IUsuarioService {
@@ -12,6 +15,7 @@ public interface IUsuarioService {
 	void eliminar(Long idUsuario);
 	Usuario buscarPorId(Long idUsuario);
 	Usuario findByName(String nombre);
+	public Page<Usuario> findAll(Pageable pageable);
 }
 /*
 public List<Usuario> findAll();

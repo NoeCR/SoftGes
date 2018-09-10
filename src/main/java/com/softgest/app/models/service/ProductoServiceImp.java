@@ -47,4 +47,9 @@ public class ProductoServiceImp implements IProductoService {
 		productoDao.save(producto);
 		
 	}
+
+	@Override
+	public List<Producto> findByEstado(String term) {		
+		return productoDao.findByEstado_OrderByCreateProDesc(term);
+	}
 }
